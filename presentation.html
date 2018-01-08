@@ -125,19 +125,6 @@
 
             <section data-markdown>
                 <textarea data-template>
-                    ## Qui utilise Concourse ?
-                    
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                </textarea>
-            </section>
-
-            <section data-markdown>
-                <textarea data-template>
 
                     <img src="/img/concourse-logo.png" height=200 />
 
@@ -148,15 +135,14 @@
                 </textarea>
             </section>
 
-            
             <section data-markdown>
                 <textarea data-template>
                     ## Resource
                     
-                    - Brique de base de Concourse, que l'on peut:
-                        - _check_ des nouvelles versions
-                        - _get_ pour l'utiliser dans un job/task
-                        - _put_ pour y envoyer le résultat d'un job/task
+                    - Brique de base, que Concourse peut:
+                        - _check_, pour découvrir des nouvelles versions
+                        - _get_, pour l'utiliser dans un job/task
+                        - _put_, pour y envoyer le résultat d'un job/task
 
                     - Interface unique, avec de nombreuses implémentations
                         - git
@@ -167,6 +153,97 @@
                         - Plein de resources community ! (github, slack, jira, sonar ...) 
 
                     - Simple à implémenter: trois scripts dans un container de votre choix
+                        - Voire moins, e.g. pour des resources _put_ only
+                </textarea>
+            </section>
+            
+            <section data-markdown>
+                <textarea data-template>
+                    ## Exemple de resource : git
+
+                    - Définition :
+                    <code>
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    </code>
+
+                    - Utilisation :
+                    <code>
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    </code>
+                </textarea>
+            </section>
+            
+            <section data-markdown>
+                <textarea data-template>
+                    ## Jobs
+
+                    - Deuxième brique de base
+                    - Série de steps:
+                        - _task_, pour éxécuter du code arbitraire dans un container
+                        - _get_, pour récupérer des resources à utiliser en input
+                            - Peut entraîner l'éxécution du job ou non, via un flag _trigger_ 
+                        - _put_, pour pousser des outputs de jobs vers des resources
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Exemple de job
+
+                    <code>
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                    </code>
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Graphiquement
+
+                    <img src="/img/TODO.png" height=200 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Pipeline 
+
+                    - Assemblage de jobs qui tournent en parallèle ou séquentiellement
+                    - Concourse calcule les dépendences entre les jobs en fonction des resources
+
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Concourse UI 
+
+                    - Le GUI est un site web, immutable
+                    - On interagit avec l'outil en CLI _`fly`_
+
+                    - TODO
+                    - TODO
+                    - TODO
+                    - TODO
                 </textarea>
             </section>
         </div>

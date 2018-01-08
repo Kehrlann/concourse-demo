@@ -17,6 +17,8 @@ Why are we even building something new
 ## Action !
 - Git resource
 - get + test (e.g. backend)
+- refactor : put the task in it's own file, same for the script
+- Fly : hijack, execute
 - Duplicate : front-end (c-c + c-v this one)
 - Swap out vanilla docker image for custom ones
 - Deploy to s3 + pcf
