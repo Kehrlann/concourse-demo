@@ -162,24 +162,29 @@
                     ## Exemple de resource : git
 
                     - Définition :
-                    <code>
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    </code>
+
+                    ```yaml
+                    resources:
+                    - name: my-git-repo
+                      type: git
+                      source:
+                        uri: git@github.com/Kehrlann/concourse-demo.git
+                        branch: master
+                        private_key: ...
+                        paths: [ci, backend]
+                    ```
 
                     - Utilisation :
-                    <code>
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    </code>
+
+                    ```yaml
+                    jobs:
+                    - name: build-backend
+                      plan:
+                      - get: repo
+                        resource: backend-repo
+                        trigger: true
+                      - ... [other tasks] ...
+                    ```
                 </textarea>
             </section>
             
@@ -200,22 +205,27 @@
                 <textarea data-template>
                     ## Exemple de job
 
-                    <code>
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    </code>
-                </textarea>
-            </section>
+                    ```yaml
+                    jobs:
+                    - name: build-backend
+                      plan:
+                      - get: repo
+                        resource: backend-repo
+                        trigger: true
+                      - task: build
+                        file: repo/ci/tasks/build-backend.yml
+                        params:
+                          MY_ENV_VAR: value
+                          OTHER_ENV_VAR: morevalues
+                      - put: s3-backend
+                        path: output 
+                   ```
 
-            <section data-markdown>
-                <textarea data-template>
-                    ## Graphiquement
-
-                    <img src="/img/TODO.png" height=200 />
+                    - TODO : add graphical view
+                    - TODO : add graphical view
+                    - TODO : add graphical view
+                    - TODO : add graphical view
+                    - TODO : add graphical view
                 </textarea>
             </section>
 
@@ -238,12 +248,10 @@
                     ## Concourse UI 
 
                     - Le GUI est un site web, immutable
-                    - On interagit avec l'outil en CLI _`fly`_
-
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
+                    - Interaction via l'outil en CLI _`fly`_
+                        - _`fly set-pipeline`_, _`fly trigger-job`_, ..
+                        - _`fly execute`_ to run send a one-off task to the pipeline
+                        - _`fly intercept`_ to inspect a running container
                 </textarea>
             </section>
         </div>
