@@ -1,0 +1,16 @@
+jobs:
+- name: test-job
+  plan:
+  - task: test-task
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          insecure_registries: ["registry:5000"]
+          repository: "registry:5000/alpine"
+      run:
+        path: /bin/ash
+        args:
+          - "-c"
+          - "echo 'Hello'"
