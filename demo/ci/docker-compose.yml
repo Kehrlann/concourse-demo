@@ -40,7 +40,8 @@ services:
     image: registry:2
     volumes:
       - "registry:/var/lib/registry"
-    
+    ports: 
+      - "5000:5000" 
 
 volumes:
   registry:
