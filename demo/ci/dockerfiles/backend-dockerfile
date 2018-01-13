@@ -1,0 +1,17 @@
+FROM maven
+
+ADD . /tmp/repo
+
+# move the alternative settings file into place. this will cause installed
+# dependencies to be persisted in the image rather on the mounted .m2 volume.
+# see https://github.com/carlossg/docker-maven/issues/11
+RUN mv /usr/share/maven/ref/settings-docker.xml /usr/share/maven/ref/settings.xml
+
+# Package the dependencies
+RUN mvn clean package \
+    -f /tmp/repo/demo/backend/pom.xml \
+    -s /usr/share/maven/ref/settings.xml \
+    -DskipTests=true
+
+# Delete the repo from the image
+RUN rm -rf /tmp/repo

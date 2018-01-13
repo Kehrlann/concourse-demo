@@ -1,16 +1,30 @@
+config:
+- &git-config
+  uri: https://github.com/Kehrlann/concourse-demo.git
+  branch: master
+
+resources:
+- name: backend-image-repo
+  type: git
+  source:
+    <<: *git-config
+    paths: [demo/backend/pom.xml, demo/ci/dockerfiles/backend-dockerfile]
+
+
+- name: backend-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/backend-image"
+
 jobs:
-- name: test-job
+- name: build-backend-image
   plan:
-  - task: test-task
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          insecure_registries: ["registry:5000"]
-          repository: "registry:5000/alpine"
-      run:
-        path: /bin/ash
-        args:
-          - "-c"
-          - "echo 'Hello'"
+  - get: repo
+    resource: backend-image-repo
+    trigger: true
+  - put: backend-image
+    params:
+      build: repo
+      dockerfile: repo/demo/ci/dockerfiles/backend-dockerfile
+
