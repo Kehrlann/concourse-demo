@@ -1,20 +1,39 @@
+#------------------------------------------------------------------------------
+#
+# Global config :
+# These are just yaml labels that can be reused elsewhere in the file, to allow
+# reuse of common values. They are not concourse specific.
+#
+#------------------------------------------------------------------------------
 config:
 - &git-config
   uri: https://github.com/Kehrlann/concourse-demo.git
   branch: master
 
+
+#------------------------------------------------------------------------------
+#
+# Concourse resources :
+# Here are the inputs and outputs of all jobs defined in this pipeline.
+#
+#------------------------------------------------------------------------------
 resources:
 - name: backend-image-repo
   type: git
   source:
     <<: *git-config
-    paths: [demo/backend/pom.xml, demo/ci/dockerfiles/backend-dockerfile]
+    paths:
+    - demo/backend/pom.xml
+    - demo/ci/dockerfiles/backend-dockerfile
 
-- name: backend-repo
+- name: frontend-image-repo
   type: git
   source:
     <<: *git-config
-    paths: [demo/backend, demo/ci/tasks/build-backend.yml]
+    paths:
+    - demo/frontend/package.json
+    - demo/frontend/yarn.lock
+    - demo/ci/dockerfiles/frontend-dockerfile
 
 - name: backend-image
   type: docker-image
@@ -22,6 +41,31 @@ resources:
     insecure_registries: ["registry:5000"]
     repository: "registry:5000/backend-image"
 
+- name: frontend-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/frontend-image"
+
+- name: backend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths: [demo/backend, demo/ci/tasks/build-backend.yml]
+
+#- name: frontend-repo
+#  type: git
+#  source:
+#    <<: *git-config
+#    paths: [demo/frontend]
+
+
+#------------------------------------------------------------------------------
+#
+# Jobs :
+# All the jobs that constitue the pipeline.
+#
+#------------------------------------------------------------------------------
 jobs:
 - name: build-backend-image
   plan:
@@ -33,12 +77,23 @@ jobs:
       build: repo
       dockerfile: repo/demo/ci/dockerfiles/backend-dockerfile
 
+- name: build-frontend-image
+  plan:
+  - get: repo
+    resource: frontend-image-repo
+    trigger: true
+  - put: frontend-image
+    params:
+      build: repo
+      dockerfile: repo/demo/ci/dockerfiles/frontend-dockerfile
+
 - name: backend
   plan:
   - get: repo
     resource: backend-repo
     trigger: true
   - get: backend-image
+    passed: [build-backend-image]
   - task: test-task
     image: backend-image
     config:
