@@ -10,6 +10,11 @@ resources:
     <<: *git-config
     paths: [demo/backend/pom.xml, demo/ci/dockerfiles/backend-dockerfile]
 
+- name: backend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths: [demo/backend, demo/ci/tasks/build-backend.yml]
 
 - name: backend-image
   type: docker-image
@@ -28,3 +33,22 @@ jobs:
       build: repo
       dockerfile: repo/demo/ci/dockerfiles/backend-dockerfile
 
+- name: backend
+  plan:
+  - get: repo
+    resource: backend-repo
+    trigger: true
+  - get: backend-image
+  - task: test-task
+    image: backend-image
+    config:
+      platform: linux
+      inputs:
+      - name: repo
+      run:
+        path: /bin/bash
+        args:
+          - "-c"
+          - |
+            cd repo/demo/backend && \
+            mvn test -s /usr/share/maven/ref/settings.xml
