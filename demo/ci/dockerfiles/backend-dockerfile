@@ -11,7 +11,7 @@ RUN mv /usr/share/maven/ref/settings-docker.xml /usr/share/maven/ref/settings.xm
 RUN mvn clean package \
     -f /tmp/repo/demo/backend/pom.xml \
     -s /usr/share/maven/ref/settings.xml \
-    -DskipTests=true
+    -Dmaven.test.failure.ignore=true
 
 # Delete the repo from the image
 RUN rm -rf /tmp/repo
