@@ -130,4 +130,4 @@ jobs:
           - |
             cd repo/demo/frontend && \
             mv /tmp/node_modules . && \
-            yarn test
+            CI=true yarn test
