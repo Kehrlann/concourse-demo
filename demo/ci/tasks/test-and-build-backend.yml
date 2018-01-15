@@ -1,3 +1,4 @@
+---
 inputs:
 - name: repo
 outputs:
@@ -11,4 +12,6 @@ image_resource:
     insecure_registries: ["registry:5000"]
 
 run:
-  path: repo/demo/ci/scripts/test-and-build-backend.sh
+  path: /bin/bash
+  args:
+  - repo/demo/ci/scripts/test-and-build-backend.sh
