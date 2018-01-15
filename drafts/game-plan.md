@@ -29,14 +29,15 @@ Why are we even building something new
 
 ## TODO before action can happen :
 - Create front-end
-    - Create react app
+    x Create react app
     - Port TODO MVC
     - Create some tests
     - Create test+compile image
 - Create back-end
-    - Create kotlin backend
+    x Create kotlin backend
+    - Fix rest repository path 
     - Create some tests
     - Create test+compile image
 - Create e2e tests
     - Create image
-    - Run wth Chrome headless
+    - Run wth Chrome headless ? puppeteer ?

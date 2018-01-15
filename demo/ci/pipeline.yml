@@ -51,7 +51,10 @@ resources:
   type: git
   source:
     <<: *git-config
-    paths: [demo/backend, demo/ci/tasks/build-backend.yml]
+    paths:
+    - demo/backend
+    - demo/ci/tasks/test-and-build-backend.yml
+    - demo/ci/scripts/test-and-build-backend.sh
 
 - name: frontend-repo
   type: git
@@ -95,19 +98,9 @@ jobs:
   - get: backend-image
     passed:
     - build-backend-image
-  - task: test
+  - task: build
     image: backend-image
-    config:
-      platform: linux
-      inputs:
-      - name: repo
-      run:
-        path: /bin/bash
-        args:
-          - "-c"
-          - |
-            cd repo/demo/backend && \
-            mvn test -s /usr/share/maven/ref/settings.xml
+    file: repo/demo/ci/tasks/test-and-build-backend.yml
 
 - name: frontend
   plan:
