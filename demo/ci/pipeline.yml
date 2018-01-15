@@ -53,11 +53,11 @@ resources:
     <<: *git-config
     paths: [demo/backend, demo/ci/tasks/build-backend.yml]
 
-#- name: frontend-repo
-#  type: git
-#  source:
-#    <<: *git-config
-#    paths: [demo/frontend]
+- name: frontend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths: [demo/frontend]
 
 
 #------------------------------------------------------------------------------
@@ -93,8 +93,9 @@ jobs:
     resource: backend-repo
     trigger: true
   - get: backend-image
-    passed: [build-backend-image]
-  - task: test-task
+    passed:
+    - build-backend-image
+  - task: test
     image: backend-image
     config:
       platform: linux
@@ -107,3 +108,26 @@ jobs:
           - |
             cd repo/demo/backend && \
             mvn test -s /usr/share/maven/ref/settings.xml
+
+- name: frontend
+  plan:
+  - get: repo
+    resource: frontend-repo
+    trigger: true
+  - get: frontend-image
+    passed:
+    - build-frontend-image
+  - task: test
+    image: frontend-image
+    config:
+      platform: linux
+      inputs:
+      - name: repo
+      run:
+        path: /bin/bash
+        args:
+          - "-c"
+          - |
+            cd repo/demo/frontend && \
+            mv /tmp/node_modules . && \
+            yarn test
