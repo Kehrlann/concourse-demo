@@ -32,12 +32,20 @@ Why are we even building something new
     x Create react app
     - Port TODO MVC
     - Create some tests
-    - Create test+compile image
+      - Add SinonJS for mocking
+      - Add enzyme for testing
+      - Don't forget to get Sinon docs
+    - Add proxy to backend for local dev
+    x Create test+compile image
 - Create back-end
     x Create kotlin backend
-    - Fix rest repository path 
-    - Create some tests
-    - Create test+compile image
+    x Fix rest repository path 
+    x Create some tests
+    x Create test+compile image
+    - Maybe add a delay before all operations to simulate network latency ?
 - Create e2e tests
     - Create image
     - Run wth Chrome headless ? puppeteer ?
+- Deploy to CF
+    - Start up PCF-dev
+    - Stand up a MySQL db ??
