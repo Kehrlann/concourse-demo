@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.todo-wrapper {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  text-align: left;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+.todo-wrapper li {
+  padding: 10px;
+}

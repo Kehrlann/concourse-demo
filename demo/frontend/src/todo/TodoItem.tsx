@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export interface TodoItem {
+    id?: number;
     text: string;
     done: boolean;
 }
@@ -8,6 +9,6 @@ export interface TodoItem {
 export class TodoItemPresenter extends React.Component<{todo: TodoItem}, {}> {
     render() {
         const status = this.props.todo.done ? '[x]' : '[ ]';
-        return <li>{this.props.todo.text} {status}</li>;
+        return <li>{status} {this.props.todo.text}</li>;
     }
 }
