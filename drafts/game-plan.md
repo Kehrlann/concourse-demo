@@ -32,10 +32,10 @@ Why are we even building something new
     x Create react app
     - Port TODO MVC
     - Create some tests
-      - Add SinonJS for mocking
-      - Add enzyme for testing
-      - Don't forget to get Sinon docs
-    - Add proxy to backend for local dev
+      x Add SinonJS for mocking
+      x Add enzyme for testing
+      x Don't forget to get Sinon docs
+    x Add proxy to backend for local dev
     x Create test+compile image
 - Create back-end
     x Create kotlin backend

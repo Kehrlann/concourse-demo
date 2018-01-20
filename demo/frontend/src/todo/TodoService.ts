@@ -10,4 +10,8 @@ export class TodoService {
             .then(json => json['_embedded'].todoItems)
             .catch(e => []);
     }
+
+    static createTodo(text: string) {
+        // TODO: fix me
+    }
 }
