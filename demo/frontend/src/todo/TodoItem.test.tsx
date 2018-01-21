@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { TodoItem, TodoItemPresenter } from './TodoItem';
 import { shallow } from 'enzyme';
+import * as Sinon from 'sinon';
+import { SinonStub } from 'sinon';
+import { TodoService } from './TodoService';
 
 describe('TodoItemPresenter', () => {
 
@@ -23,6 +26,36 @@ describe('TodoItemPresenter', () => {
         const wrapper = shallow(<TodoItemPresenter todo={todo}/>);
 
         expect(wrapper.hasClass('done')).toBeFalsy();
+    });
 
+    describe('clicking on a todo', () => {
+        let completeStub: SinonStub;
+
+        beforeEach(() => {
+           completeStub = Sinon.stub(TodoService, 'completeTodo');
+        });
+
+        afterEach(() => {
+            completeStub.restore();
+        });
+
+        it('should complete no-done todos', () => {
+            const todo: TodoItem = {text: 'This is a todo', done: false, id: 42};
+            const wrapper = shallow(<TodoItemPresenter todo={todo}/>);
+
+            wrapper.simulate('click');
+
+            expect(completeStub.calledOnce).toBeTruthy();
+            expect(completeStub.calledWith(todo.id)).toBeTruthy();
+        });
+
+        it('should not modify done todos', () => {
+            const todo: TodoItem = {text: 'This is a todo', done: true, id: 42};
+            const wrapper = shallow(<TodoItemPresenter todo={todo}/>);
+
+            wrapper.simulate('click');
+
+            expect(completeStub.notCalled).toBeTruthy();
+        });
     });
 });

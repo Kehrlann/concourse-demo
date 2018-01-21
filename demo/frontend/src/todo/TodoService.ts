@@ -19,4 +19,13 @@ export class TodoService {
             .then(resp => resp.json())
             .catch(e => null);
     }
+
+    static completeTodo(id: number) {
+        return fetch(
+            `${API_ENDPOINT}/${id}`,
+            {method: 'PATCH', body: '{ "done": true }', headers: {'Content-type': 'application/json'}}
+        )
+            .then(resp => resp.json())
+            .catch(e => null);
+    }
 }

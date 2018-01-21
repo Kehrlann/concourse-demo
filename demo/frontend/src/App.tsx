@@ -13,6 +13,10 @@ class App extends React.Component<{}, { todoItems: TodoItem[] }> {
     }
 
     componentDidMount() {
+        this.loadTodos();
+    }
+
+    loadTodos() {
         TodoService.listTodos()
             .then(items => this.setState({todoItems: items}));
     }
