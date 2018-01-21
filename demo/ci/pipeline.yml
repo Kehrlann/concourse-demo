@@ -99,6 +99,8 @@ jobs:
   - get: backend-image
     passed:
     - build-backend-image
+    params:
+      skip_download: false
   - task: build
     image: backend-image
     file: repo/demo/ci/tasks/test-and-build-backend.yml
@@ -109,6 +111,8 @@ jobs:
     resource: frontend-repo
     trigger: true
   - get: frontend-image
+    params:
+      skip_download: false
     passed:
     - build-frontend-image
   - task: test
