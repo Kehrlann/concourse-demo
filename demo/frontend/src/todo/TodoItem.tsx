@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './TodoItem.css';
 
 export interface TodoItem {
     id?: number;
@@ -8,7 +9,7 @@ export interface TodoItem {
 
 export class TodoItemPresenter extends React.Component<{todo: TodoItem}, {}> {
     render() {
-        const status = this.props.todo.done ? '[x]' : '[ ]';
-        return <li>{status} {this.props.todo.text}</li>;
+        const status = 'todo-item' + (this.props.todo.done ? ' done' : '');
+        return <li className={status}>[<span className="cross">x</span>] {this.props.todo.text}</li>;
     }
 }

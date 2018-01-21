@@ -22,10 +22,13 @@ export class TodoForm extends React.Component<{}, { value: string }> {
 
     render() {
         return (
-            <form>
-                <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                <button type="submit" onClick={this.handleClick}>Create</button>
-            </form>
+            <div>
+                <h2>New todo :</h2>
+                <form>
+                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                    <button type="submit" onClick={this.handleClick}>Create</button>
+                </form>
+            </div>
         );
     }
 }

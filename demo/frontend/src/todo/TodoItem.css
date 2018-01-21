@@ -1,0 +1,19 @@
+.todo-item {
+    cursor: pointer;
+}
+
+.todo-item:hover {
+    background-color: lavender;
+}
+
+.todo-item > .cross {
+    font-weight: bold;
+}
+
+.todo-item:not(.done) > .cross {
+    color: transparent;
+}
+
+.todo-item:not(.done):hover  > .cross {
+    color: red;
+}

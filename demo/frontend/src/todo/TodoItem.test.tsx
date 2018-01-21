@@ -11,19 +11,18 @@ describe('TodoItemPresenter', () => {
         expect(wrapper.text()).toContain(todo.text);
     });
 
-    it('should be crossed when TODO is done', () => {
+    it('should be marked as "DONE" when TODO is done', () => {
         const todo: TodoItem = {text: 'This is a todo', done: true};
         const wrapper = shallow(<TodoItemPresenter todo={todo}/>);
 
-        expect(wrapper.text()).toContain('[x]');
-        expect(wrapper.text()).not.toContain('[ ]');
+        expect(wrapper.hasClass('done')).toBeTruthy();
     });
 
-    it('should not be crossed when TODO is not done', () => {
+    it('should not be marked as "DONE" when TODO is not done', () => {
         const todo: TodoItem = {text: 'This is a todo', done: false};
         const wrapper = shallow(<TodoItemPresenter todo={todo}/>);
 
-        expect(wrapper.text()).toContain('[ ]');
-        expect(wrapper.text()).not.toContain('[x]');
+        expect(wrapper.hasClass('done')).toBeFalsy();
+
     });
 });

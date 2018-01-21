@@ -24,6 +24,7 @@ class App extends React.Component<{}, { todoItems: TodoItem[] }> {
                     <h1>TODO all the things !</h1>
                 </div>
                 <TodoList todos={this.state.todoItems}/>
+                <hr/>
                 <TodoForm/>
             </div>
         );
