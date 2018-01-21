@@ -11,7 +11,12 @@ export class TodoService {
             .catch(e => []);
     }
 
-    static createTodo(text: string) {
-        // TODO: fix me
+    static createTodo(text: string): Promise<TodoItem> {
+        return fetch(
+            API_ENDPOINT,
+            {method: 'POST', body: `{ "text": "${text}" }`, headers: {'Content-type': 'application/json'}}
+        )
+            .then(resp => resp.json())
+            .catch(e => null);
     }
 }
