@@ -6,6 +6,11 @@
     background-color: lavender;
 }
 
+.todo-item.done {
+    color: dimgrey;
+    font-style: italic;
+}
+
 .todo-item > .cross {
     font-weight: bold;
 }
