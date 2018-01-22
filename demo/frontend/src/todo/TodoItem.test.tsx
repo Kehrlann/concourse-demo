@@ -33,13 +33,14 @@ describe('TodoItemPresenter', () => {
 
         beforeEach(() => {
            completeStub = Sinon.stub(TodoService, 'completeTodo');
+           completeStub.resolves(null);
         });
 
         afterEach(() => {
             completeStub.restore();
         });
 
-        it('should complete no-done todos', () => {
+        it('should complete not-done todos', () => {
             const todo: TodoItem = {text: 'This is a todo', done: false, id: 42};
             const wrapper = shallow(<TodoItemPresenter todo={todo}/>);
 
@@ -56,6 +57,23 @@ describe('TodoItemPresenter', () => {
             wrapper.simulate('click');
 
             expect(completeStub.notCalled).toBeTruthy();
+        });
+
+        it('should call the onComplete handler', async() => {
+            const todo: TodoItem = {text: 'This is a todo', done: false, id: 42};
+            const completedTodo = Object.assign({}, todo, { done: true });
+
+            const completeResponse = Promise.resolve(completedTodo);
+            completeStub.returns(completeResponse);
+
+            const handlerSpy = Sinon.spy();
+            const wrapper = shallow(<TodoItemPresenter todo={todo} onCompleted={handlerSpy}/>);
+
+            wrapper.simulate('click');
+            await completeResponse;
+
+            expect(handlerSpy.calledOnce).toBeTruthy();
+            expect(handlerSpy.calledWith(completedTodo)).toBeTruthy();
         });
     });
 });

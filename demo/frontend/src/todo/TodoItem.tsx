@@ -8,8 +8,10 @@ export interface TodoItem {
     done: boolean;
 }
 
-export class TodoItemPresenter extends React.Component<{ todo: TodoItem }, {}> {
-    constructor(props: { todo: TodoItem }) {
+type TodoItemProps = { todo: TodoItem, onCompleted?: (t: TodoItem) => void };
+
+export class TodoItemPresenter extends React.Component<TodoItemProps, {}> {
+    constructor(props: TodoItemProps) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
@@ -18,7 +20,13 @@ export class TodoItemPresenter extends React.Component<{ todo: TodoItem }, {}> {
         const todo = this.props.todo;
 
         if (!todo.done) {
-            TodoService.completeTodo(todo.id as number);
+            TodoService.completeTodo(todo.id as number)
+                .then(updatedTodo => {
+                        if (this.props.onCompleted) {
+                            this.props.onCompleted(updatedTodo);
+                        }
+                    }
+                );
         }
     }
 

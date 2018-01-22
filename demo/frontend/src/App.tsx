@@ -10,6 +10,7 @@ class App extends React.Component<{}, { todoItems: TodoItem[] }> {
         super(props);
 
         this.state = {todoItems: []};
+        this.loadTodos = this.loadTodos.bind(this);
     }
 
     componentDidMount() {
@@ -27,7 +28,7 @@ class App extends React.Component<{}, { todoItems: TodoItem[] }> {
                 <div className="App-header">
                     <h1>TODO all the things !</h1>
                 </div>
-                <TodoList todos={this.state.todoItems}/>
+                <TodoList todos={this.state.todoItems} onCompleted={this.loadTodos}/>
                 <hr/>
                 <TodoForm/>
             </div>
