@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -eu
 
 cd repo/demo/frontend
 mv /tmp/node_modules .

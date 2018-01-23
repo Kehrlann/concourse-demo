@@ -1,8 +1,6 @@
 #!/bin/bash
 
-echo 'hi hi'
-
-set -ue
+set -eu
 
 SOURCE_DIR=$PWD/repo/demo/backend
 OUTPUT_DIR=$PWD/build
