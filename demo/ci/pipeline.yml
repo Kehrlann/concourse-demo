@@ -61,7 +61,10 @@ resources:
   type: git
   source:
     <<: *git-config
-    paths: [demo/frontend]
+    paths:
+    - demo/frontend
+    - demo/ci/tasks/test-and-build-frontend.yml
+    - demo/ci/scripts/test-and-build-frontend.sh
 
 
 #------------------------------------------------------------------------------
@@ -117,15 +120,4 @@ jobs:
     - build-frontend-image
   - task: test
     image: frontend-image
-    config:
-      platform: linux
-      inputs:
-      - name: repo
-      run:
-        path: /bin/bash
-        args:
-          - "-c"
-          - |
-            cd repo/demo/frontend && \
-            mv /tmp/node_modules . && \
-            CI=true yarn test
+    file: repo/demo/ci/tasks/test-and-build-frontend.yml

@@ -1,0 +1,20 @@
+FROM node
+
+ADD . /tmp/repo
+
+RUN cd /tmp/repo/demo/frontend && \
+    yarn install && \
+    mv node_modules /tmp && \
+    rm -rf /tmp/repo
+
+# Add Google package signing key for chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+
+RUN apt -qq update \
+  && apt -qq install -y software-properties-common \
+  && apt -qq update \
+  && apt -qq install -y apt-transport-https \
+  && add-apt-repository "deb https://dl.google.com/linux/chrome/deb/ stable main" \
+  && apt -qq update \
+  && apt -qq install -y google-chrome-stable
+

@@ -30,8 +30,8 @@ Why are we even building something new
 ## TODO before action can happen :
 - Create front-end
     x Create react app
-    - Port TODO MVC
-    - Create some tests
+    x Port TODO MVC
+    x Create some tests
       x Add SinonJS for mocking
       x Add enzyme for testing
       x Don't forget to get Sinon docs
@@ -42,10 +42,14 @@ Why are we even building something new
     x Fix rest repository path 
     x Create some tests
     x Create test+compile image
-    - Maybe add a delay before all operations to simulate network latency ?
 - Create e2e tests
+    x Run wth locally with Testcaffe
     - Create image
-    - Run wth Chrome headless ? puppeteer ?
+    - Run e2e tests from previous jobs
+      - Install minio docker image for putting the artifacts ?
+- Publish on tag
+    - Add the publish stage
+    - Add the deploy stage
 - Deploy to CF
     - Start up PCF-dev
     - Stand up a MySQL db ??
