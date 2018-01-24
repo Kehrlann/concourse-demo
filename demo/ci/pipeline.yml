@@ -36,6 +36,13 @@ resources:
     - demo/frontend/yarn.lock
     - demo/ci/dockerfiles/frontend-dockerfile
 
+- name: e2e-image-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/ci/dockerfiles/e2e-dockerfile
+
 - name: backend-image
   type: docker-image
   source:
@@ -47,6 +54,12 @@ resources:
   source:
     insecure_registries: ["registry:5000"]
     repository: "registry:5000/frontend-image"
+
+- name: e2e-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/e2e-image"
 
 - name: backend-repo
   type: git
@@ -94,16 +107,26 @@ jobs:
       build: repo
       dockerfile: repo/demo/ci/dockerfiles/frontend-dockerfile
 
+- name: build-e2e-image
+  plan:
+  - get: repo
+    resource: e2e-image-repo
+    trigger: true
+  - put: e2e-image
+    params:
+      build: repo
+      dockerfile: repo/demo/ci/dockerfiles/e2e-dockerfile
+
 - name: backend
   plan:
   - get: repo
     resource: backend-repo
     trigger: true
   - get: backend-image
-    passed:
-    - build-backend-image
     params:
       skip_download: false
+    passed:
+    - build-backend-image
   - task: build
     image: backend-image
     file: repo/demo/ci/tasks/test-and-build-backend.yml
