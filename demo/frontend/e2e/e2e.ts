@@ -1,7 +1,9 @@
 import { Selector } from 'testcafe';
 
-fixture(`Getting Started`)
-    .page(`http://localhost:3000/`);
+const testUrl: string = process.env.APP_URL || 'http://localhost:3000/';
+
+fixture('Getting Started')
+    .page(testUrl);
 
 test('correct title', async t => {
     await t
