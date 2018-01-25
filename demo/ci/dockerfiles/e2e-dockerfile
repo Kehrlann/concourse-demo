@@ -18,3 +18,4 @@ RUN apt -qq update \
   && apt -qq update \
   && apt -qq install -y google-chrome-stable
 
+RUN echo "192.168.11.11 local.pcfdev.io" >> /etc/hosts
