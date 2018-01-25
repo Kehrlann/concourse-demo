@@ -1,0 +1,15 @@
+---
+inputs:
+- name: repo
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: "registry:5000/e2e-image"
+    insecure_registries: ["registry:5000"]
+
+run:
+  path: /bin/bash
+  args:
+  - repo/demo/ci/scripts/run-e2e.sh

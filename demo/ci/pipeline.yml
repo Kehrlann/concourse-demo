@@ -79,6 +79,15 @@ resources:
     - demo/ci/tasks/test-and-build-frontend.yml
     - demo/ci/scripts/test-and-build-frontend.sh
 
+- name: e2e-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/frontend/e2e
+    - demo/ci/tasks/run-e2e.yml
+    - demo/ci/scripts/run-e2e.sh
+
 
 #------------------------------------------------------------------------------
 #
@@ -144,3 +153,21 @@ jobs:
   - task: test
     image: frontend-image
     file: repo/demo/ci/tasks/test-and-build-frontend.yml
+
+- name: e2e
+  plan:
+  - get: repo
+    resource: e2e-repo
+    trigger: true
+  - get: frontend-repo
+    passed: [frontend]
+    trigger: true
+  - get: backend-repo
+    passed: [backend]
+    trigger: true
+  - get: e2e-image
+    params:
+      skip_download: false
+  - task: test
+    image: e2e-image
+    file: repo/demo/ci/tasks/run-e2e.yml
