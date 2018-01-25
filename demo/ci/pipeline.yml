@@ -144,13 +144,7 @@ jobs:
   - get: repo
     resource: backend-repo
     trigger: true
-  - get: backend-image
-    params:
-      skip_download: false
-    passed:
-    - build-backend-image
   - task: build
-    image: backend-image
     file: repo/demo/ci/tasks/test-and-build-backend.yml
   - put: cf-dev
     params:
@@ -162,14 +156,12 @@ jobs:
   - get: repo
     resource: frontend-repo
     trigger: true
-  - get: frontend-image
-    params:
-      skip_download: false
-    passed:
-    - build-frontend-image
   - task: test
-    image: frontend-image
     file: repo/demo/ci/tasks/test-and-build-frontend.yml
+  - put: cf-dev
+    params:
+      manifest: repo/demo/ci/manifests/frontend.yml
+      path: build
 
 - name: e2e
   plan:
@@ -182,9 +174,5 @@ jobs:
   - get: backend-repo
     passed: [backend]
     trigger: true
-  - get: e2e-image
-    params:
-      skip_download: false
   - task: test
-    image: e2e-image
     file: repo/demo/ci/tasks/run-e2e.yml

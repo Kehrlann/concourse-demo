@@ -1,0 +1,9 @@
+---
+applications:
+- name: web-app
+  buildpack: staticfile_buildpack
+  instances: 1
+  memory: 64M
+  disk_quota: 256M
+  routes:
+  - route: todo.ci.local.pcfdev.io
