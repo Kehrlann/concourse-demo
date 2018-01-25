@@ -1,0 +1,9 @@
+---
+applications:
+- name: backend
+  buildpack: java_buildpack
+  instances: 1
+  memory: 512M
+  disk_quota: 256M
+  routes:
+  - route: todo.ci.local.pcfdev.io/api

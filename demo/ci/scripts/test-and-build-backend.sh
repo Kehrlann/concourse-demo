@@ -11,4 +11,4 @@ mvn -s /usr/share/maven/ref/settings.xml \
     -DdisablexmlReport=true \
     -Dsurefire.useFile=false
 
-mv target/*.jar $OUTPUT_DIR
+mv target/*.jar $OUTPUT_DIR/backend.jar
