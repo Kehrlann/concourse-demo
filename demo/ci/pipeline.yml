@@ -11,6 +11,12 @@ config:
   private_key: {{ssh-key}}
   branch: master
 
+- &cf-config
+  api: https://api.local.pcfdev.io
+  username: admin
+  password: admin
+  organization: pcfdev-org
+  skip_cert_check: true
 
 #------------------------------------------------------------------------------
 #
@@ -93,14 +99,8 @@ resources:
 - name: cf-dev
   type: cf
   source:
-    api: https://api.local.pcfdev.io
-    username: admin
-    password: admin
-    organization: pcfdev-org
-    space: pcfdev-space
-    skip_cert_check: true
-
-
+    <<: *cf-config
+    space: ci
 
 #------------------------------------------------------------------------------
 #
