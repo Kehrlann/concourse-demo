@@ -85,7 +85,7 @@
 
                     - Créé en 2014 chez Pivotal, pour les besoins de CI dans les équipes de développement de Pivotal Cloud Foundry
                         - Insatisfaction avec les outils existants (SaaS ou hosted)
-                        - Expertiste sur les containers acquise avec Cloud Foundry
+                        - Expertise sur les containers acquise avec Cloud Foundry
                 </textarea>
             </section>
 
@@ -106,7 +106,7 @@
                     ### SaaS tools (e.g. Travis)
                     - Des similarités importantes: travis.yml, containers par défaut.
                     - Pas de pipeline puissants (_Travis stages_ est en beta)
-                    - Pas d'éxécution de jobs "locaux", plein de petits commits de debug
+                    - Pas d'exécution de jobs "locaux", plein de petits commits de debug
                 </textarea>
             </section>
 
@@ -114,12 +114,8 @@
                 <textarea data-template>
                     ## Qui utilise Concourse ?
                     
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
+                    <img src="/img/logos.png" height=640 />
+
                 </textarea>
             </section>
 
@@ -194,9 +190,9 @@
 
                     - Deuxième brique de base
                     - Série de steps:
-                        - _task_, pour éxécuter du code arbitraire dans un container
+                        - _task_, pour exécuter du code arbitraire dans un container
                         - _get_, pour récupérer des resources à utiliser en input
-                            - Peut entraîner l'éxécution du job ou non, via un flag _trigger_ 
+                            - Peut entraîner l'exécution du job ou non, via un flag _trigger_ 
                         - _put_, pour pousser des outputs de jobs vers des resources
                 </textarea>
             </section>
@@ -204,6 +200,8 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Exemple de job
+
+                    ### Dans le code
 
                     ```yaml
                     jobs:
@@ -217,15 +215,14 @@
                         params:
                           MY_ENV_VAR: value
                           OTHER_ENV_VAR: morevalues
-                      - put: s3-backend
+                      - put: backend-bucket
                         path: output 
-                   ```
+                    ```
 
-                    - TODO : add graphical view
-                    - TODO : add graphical view
-                    - TODO : add graphical view
-                    - TODO : add graphical view
-                    - TODO : add graphical view
+                    ### Dans l'UI
+
+                    <img src="/img/job.png" height=200 />
+
                 </textarea>
             </section>
 
@@ -234,12 +231,9 @@
                     ## Pipeline 
 
                     - Assemblage de jobs qui tournent en parallèle ou séquentiellement
-                    - Concourse calcule les dépendences entre les jobs en fonction des resources
-
-                    - TODO
-                    - TODO
-                    - TODO
-                    - TODO
+                    - Le lancement des jobs est contrôlé par les _resources_ quand il y a
+                      une nouvelle version disponible
+                    - Toute l'info est dans un fichier de configuration, e.g. `pipeline.yml`
                 </textarea>
             </section>
 
@@ -250,10 +244,32 @@
                     - Le GUI est un site web, immutable
                     - Interaction via l'outil en CLI _`fly`_
                         - _`fly set-pipeline`_, _`fly trigger-job`_, ..
-                        - _`fly execute`_ to run send a one-off task to the pipeline
-                        - _`fly intercept`_ to inspect a running container
+                        - _`fly execute`_ pour envoyer une _task_ à exécuter au worker
+                        - _`fly intercept`_ pour exécuter un shell dans le container d'un job
                 </textarea>
             </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Architecture
+
+                    <img src="/img/architecture.png" height=800 />
+
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+
+                    <img src="/img/concourse-logo.png" height=200 />
+
+                    # Ca suffit les slides, on veut du code !
+                    <br>
+                    <br>
+                    <br>
+                </textarea>
+            </section>
+
         </div>
     </div>
 
