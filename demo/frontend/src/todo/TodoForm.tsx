@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { TodoService } from './TodoService';
 
-export class TodoForm extends React.Component<{}, { value: string }> {
+export class TodoForm extends React.Component<{ onTodoAdded: (() => void)}, { value: string }> {
 
-    constructor(props: {}) {
+    constructor(props: { onTodoAdded: (() => void) }) {
         super(props);
 
         this.state = {value: ''};
@@ -16,7 +16,8 @@ export class TodoForm extends React.Component<{}, { value: string }> {
     }
 
     handleClick(event: React.FormEvent<HTMLButtonElement>) {
-        TodoService.createTodo(this.state.value);
+        TodoService.createTodo(this.state.value)
+            .then(() => this.props.onTodoAdded());
         this.setState({value: ''});
     }
 
@@ -24,10 +25,8 @@ export class TodoForm extends React.Component<{}, { value: string }> {
         return (
             <div>
                 <h2>New todo :</h2>
-                <form>
-                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                    <button type="submit" onClick={this.handleClick}>Create</button>
-                </form>
+                <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                <button onClick={this.handleClick}>Create</button>
             </div>
         );
     }

@@ -30,7 +30,7 @@ class App extends React.Component<{}, { todoItems: TodoItem[] }> {
                 </div>
                 <TodoList todos={this.state.todoItems} onCompleted={this.loadTodos}/>
                 <hr/>
-                <TodoForm/>
+                <TodoForm onTodoAdded={this.loadTodos}/>
             </div>
         );
     }
