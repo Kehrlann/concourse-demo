@@ -12,7 +12,8 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "e2e": "testcafe \"chrome:headless\" e2e"
+    "e2e": "testcafe \"chrome\" e2e",
+    "e2e-ci": "testcafe \"chrome:headless --no-sandbox --disable-gpu\" e2e"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.6",
