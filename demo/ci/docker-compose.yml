@@ -41,9 +41,22 @@ services:
     image: registry:2
     volumes:
       - "registry:/var/lib/registry"
-    ports: 
-      - "5000:5000" 
+    ports:
+      - "5000:5000"
+
+  minio:
+    image: minio/minio
+    volumes:
+    - minio-data:/export
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: changeme
+    command: server /export
+
 
 volumes:
   registry:
     external: true
+  minio-data:
