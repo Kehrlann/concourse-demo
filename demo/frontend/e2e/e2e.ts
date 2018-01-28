@@ -22,6 +22,7 @@ test('mark it done', async t => {
     const todoText = 'done todo';
     await t.typeText('input', todoText)
         .click('button')
+        .expect(Selector('li:last-child').textContent).contains(todoText)
         .click('li:last-child')
         .expect(Selector('li:last-child').classNames).contains('done');
 });
