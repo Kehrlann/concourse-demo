@@ -87,12 +87,26 @@ resources:
     - demo/ci/tasks/run-e2e.yml
     - demo/ci/scripts/run-e2e.sh
 
+- name: releases-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/ci/manifests
+    - demo/ci/scripts/package-release.sh
+
 # Cloud foundry endpoints
 - name: cf-dev
   type: cf
   source:
     <<: *cf-config
     space: ci
+
+- name: cf-prod
+  type: cf
+  source:
+    <<: *cf-config
+    space: prod
 
 # Minio (s3 compatible file storage)
 - name: backend-bucket
@@ -108,6 +122,22 @@ resources:
     <<: *s3-config
     bucket: todo-frontend
     regexp: frontend-(.*).tgz
+
+- name: release-bucket
+  type: s3
+  source:
+    <<: *s3-config
+    bucket: todo-app
+    regexp: release-(.*).tgz
+
+# Semantic versioning resources, to bump version numbers automatically
+- name: release-version
+  type: semver
+  source:
+    driver: s3
+    <<: *s3-config
+    bucket: todo-version
+    initial_version: "1.0.0"
 
 # Last, the docker images in which to run jobs
 - name: backend-image
@@ -140,7 +170,6 @@ jobs:
   plan:
   - get: repo
     resource: backend-image-repo
-    trigger: true
   - put: backend-image
     params:
       build: repo
@@ -150,7 +179,6 @@ jobs:
   plan:
   - get: repo
     resource: frontend-image-repo
-    trigger: true
   - put: frontend-image
     params:
       build: repo
@@ -160,7 +188,6 @@ jobs:
   plan:
   - get: repo
     resource: e2e-image-repo
-    trigger: true
   - put: e2e-image
     params:
       build: repo
@@ -209,3 +236,51 @@ jobs:
     trigger: true
   - task: test
     file: repo/demo/ci/tasks/run-e2e.yml
+
+
+- name: release
+  plan:
+  - aggregate:
+    - get: frontend-bucket
+      passed: [e2e]
+      trigger: true
+      params:
+        unpack: true
+    - get: backend-bucket
+      passed: [e2e]
+      trigger: true
+    - get: release-version
+    - get: release-repo
+      trigger: true
+  - task: repackage
+    file: repo/demo/ci/tasks/package-release.yml
+  - put: cf-prod
+    params:
+      manifest: repo/demo/ci/manifests/prod.yml
+      path: prod
+  - put: prod-bucket
+    params:
+      file: release/release-*.tgz
+  - put: release-version
+    params:
+      bump: patch
+
+
+#------------------------------------------------------------------------------
+#
+# Groups :
+# Display only certain jobs on a given page
+#
+#------------------------------------------------------------------------------
+groups:
+- name: main
+  jobs:
+  - backend
+  - frontend
+  - e2e
+  - release
+- name: images
+  jobs:
+  - build-e2e-image
+  - build-backend-image
+  - build-frontend-image

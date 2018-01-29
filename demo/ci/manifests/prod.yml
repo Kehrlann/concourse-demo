@@ -1,0 +1,19 @@
+---
+applications:
+- name: backend
+  buildpack: java_buildpack
+  instances: 1
+  memory: 512M
+  disk_quota: 256M
+  routes:
+  - route: todo.local.pcfdev.io/api
+  path: backend/todo.jar
+
+- name: web-app
+  buildpack: staticfile_buildpack
+  instances: 1
+  memory: 64M
+  disk_quota: 256M
+  routes:
+  - route: todo.local.pcfdev.io
+  path: frontend
