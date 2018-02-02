@@ -1,6 +1,6 @@
 ---
 inputs:
-- name: manifests-repo
+- name: repo
 - name: backend-bucket
 - name: frontend-bucket
 - name: release-version

@@ -16,5 +16,5 @@ mv $TAR_FILE $ELEASE_FOLDER
 mkdir -p $PROD_FOLDER/frontend
 mkdir -p $PROD_FOLDER/backend
 cp -R frontend-bucket/* $PROD_FOLDER/frontend
-cp backend-bucket/*.jar $PROD_FOLDER/backend
-cp manifests-repo/prod.yml $PROD_FOLDER/manifest.yml
+cp backend-bucket/*.jar $PROD_FOLDER/backend/todo.jar
+cp repo/demo/ci/manifests/prod.yml $PROD_FOLDER/manifest.yml

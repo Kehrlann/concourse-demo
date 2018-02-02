@@ -87,12 +87,13 @@ resources:
     - demo/ci/tasks/run-e2e.yml
     - demo/ci/scripts/run-e2e.sh
 
-- name: releases-repo
+- name: release-repo
   type: git
   source:
     <<: *git-config
     paths:
     - demo/ci/manifests
+    - demo/ci/tasks/package-release.yml
     - demo/ci/scripts/package-release.sh
 
 # Cloud foundry endpoints
@@ -128,7 +129,7 @@ resources:
   source:
     <<: *s3-config
     bucket: todo-app
-    regexp: release-(.*).tgz
+    regexp: todo-(.*).tgz
 
 # Semantic versioning resources, to bump version numbers automatically
 - name: release-version
@@ -137,6 +138,7 @@ resources:
     driver: s3
     <<: *s3-config
     bucket: todo-version
+    key: version
     initial_version: "1.0.0"
 
 # Last, the docker images in which to run jobs
@@ -228,10 +230,10 @@ jobs:
   - get: repo
     resource: e2e-repo
     trigger: true
-  - get: frontend-repo
+  - get: frontend-bucket
     passed: [frontend]
     trigger: true
-  - get: backend-repo
+  - get: backend-bucket
     passed: [backend]
     trigger: true
   - task: test
@@ -250,15 +252,16 @@ jobs:
       passed: [e2e]
       trigger: true
     - get: release-version
-    - get: release-repo
+    - get: repo
+      resource: release-repo
       trigger: true
   - task: repackage
     file: repo/demo/ci/tasks/package-release.yml
   - put: cf-prod
     params:
-      manifest: repo/demo/ci/manifests/prod.yml
+      manifest: prod/manifest.yml
       path: prod
-  - put: prod-bucket
+  - put: release-bucket
     params:
       file: release/release-*.tgz
   - put: release-version
