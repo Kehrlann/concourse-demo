@@ -44,12 +44,11 @@ Why are we even building something new
     x Create test+compile image
 - Create e2e tests
     x Run wth locally with Testcaffe
-    - Create image
-    - Run e2e tests from previous jobs
-      - Install minio docker image for putting the artifacts ?
-- Publish on tag
-    - Add the publish stage
-    - Add the deploy stage
+    x Create image
+    x Run e2e tests from previous jobs
+      x Install minio docker image for putting the artifacts ?
+      x Push apps to a CI space in PCF
 - Deploy to CF
-    - Start up PCF-dev
+    x Start up PCF-dev
+      x Push apps to prod space in PCF dev
     - Stand up a MySQL db ??
