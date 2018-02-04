@@ -27,6 +27,7 @@ class App extends React.Component<{}, { todoItems: TodoItem[] }> {
             <div className="App">
                 <div className="App-header">
                     <h1>TODO all the things !</h1>
+                    <h2>A family-friendly app</h2>
                 </div>
                 <TodoList todos={this.state.todoItems} onCompleted={this.loadTodos}/>
                 <hr/>
