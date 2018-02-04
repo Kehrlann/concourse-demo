@@ -31,6 +31,9 @@ services:
     links: [concourse-web, registry]
     depends_on: [concourse-web, registry]
     command: worker
+    dns:
+    - "172.19.0.1"
+    - "8.8.8.8"
     volumes:
     - "./keys/worker:/concourse-keys"
     - "./worker-state:/worker-state"

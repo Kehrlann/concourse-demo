@@ -1,0 +1,31 @@
+config:
+- &git-config
+  uri: git@172.19.0.1:~/concourse-demo.git
+  private_key: {{ssh-key}}
+  branch: master
+
+resources:
+- name: backend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/backend
+    - demo/ci/tasks/test-and-build-backend.yml
+    - demo/ci/scripts/test-and-build-backend.sh
+    - demo/ci/manifests/backend.yml
+
+#------------------------------------------------------------------------------
+#
+# Jobs :
+# All the jobs that constitue the pipeline.
+#
+#------------------------------------------------------------------------------
+jobs:
+- name: backend
+  plan:
+  - get: repo
+    resource: backend-repo
+    trigger: true
+  - task: build
+    file: repo/demo/ci/tasks/test-and-build-backend.yml

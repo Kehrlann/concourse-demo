@@ -59,9 +59,8 @@
 
                     - Concepts et fonctionnement
                         - Resources, jobs, pipelines
-                        - Immutable UI
-                        - Interagir avec Concourse via _fly_
-
+                        - Immutable GUI, the _fly_ CLI
+                        - Architecture
                     - Mon premier pipeline
                         - De git push au déploiement
                 </textarea>
@@ -100,7 +99,7 @@
                     - Pas de plugins mais des containers
                     - Pipelines Jenkins "officiels" depuis la version Blue Ocean (2017)
                       - Concourse a été construit autour de la notion de pipeline
-                      - Pipelines "automatiquement" générés par dépendence entre les jobs
+                      - Dans Concourse, [resource] -> [job] -> [resource] -> [job] -> ...
 
                     <br>
                     ### SaaS tools (e.g. Travis)
@@ -161,7 +160,7 @@
 
                     ```yaml
                     resources:
-                    - name: my-git-repo
+                    - name: backend-repo
                       type: git
                       source:
                         uri: git@github.com/Kehrlann/concourse-demo.git
@@ -219,7 +218,7 @@
                         path: output 
                     ```
 
-                    ### Dans l'UI
+                    ### Dans le GUI
 
                     <img src="/img/job.png" height=200 />
 
