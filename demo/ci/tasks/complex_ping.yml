@@ -10,9 +10,11 @@ image_resource:
   type: docker-image
   source:
     repository: "alpine"
+params:
+  COUNT: 1
 run:
   path: "/bin/ash"
   args:
   - "-c"
   - |
-    ping -c 1 $(cat in/address.txt) > out/output.log
+    ping -c $COUNT $(cat in/address.txt) > out/output.log

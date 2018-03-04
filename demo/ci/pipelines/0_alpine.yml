@@ -11,6 +11,6 @@ jobs:
       run:
         path: "/bin/ping"
         args:
-        - "test.daniel"
+        - "google.com"
         - "-c"
         - "1"
