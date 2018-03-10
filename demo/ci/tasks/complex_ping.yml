@@ -5,13 +5,15 @@ inputs:
 outputs:
 - name: out
 
+params:
+  COUNT: 1
+
 platform: linux
 image_resource:
   type: docker-image
   source:
     repository: "alpine"
-params:
-  COUNT: 1
+
 run:
   path: "/bin/ash"
   args:
