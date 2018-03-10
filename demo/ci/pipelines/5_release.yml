@@ -162,13 +162,14 @@ jobs:
       trigger: true
   - task: repackage
     file: repo/demo/ci/tasks/package-release.yml
-  - put: cf-prod
-    params:
-      manifest: prod/manifest.yml
-      path: prod
-  - put: release-bucket
-    params:
-      file: release/todo-*.tgz
-  - put: release-version
-    params:
-      bump: patch
+  - aggregate:
+    - put: cf-prod
+      params:
+        manifest: prod/manifest.yml
+        path: prod
+    - put: release-bucket
+      params:
+        file: release/todo-*.tgz
+    - put: release-version
+      params:
+        bump: patch
