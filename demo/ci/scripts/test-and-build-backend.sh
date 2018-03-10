@@ -13,4 +13,5 @@ mvn -s /usr/share/maven/ref/settings.xml \
     -DdisablexmlReport=true \
     -Dsurefire.useFile=false
 
+mkdir -p OUTPUT_DIR
 mv target/*.jar $OUTPUT_DIR/backend-$COMMIT_REF.jar
