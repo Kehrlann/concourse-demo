@@ -15,40 +15,14 @@ Why are we even building something new
 ### CLI tool : `fly`
 
 ## Action !
-- Git resource
-- get + test (e.g. backend)
-- refactor : put the task in it's own file, same for the script
-- Fly : hijack, execute
-- Duplicate : front-end (c-c + c-v this one)
-- Swap out vanilla docker image for custom ones
-- Deploy to s3 + pcf
-- Integrate (integration testing)
-- Publish on tag (package)
-- Push
+- Show the app
+- Show tests on the backend, on the front-end
+- Show end-to-end tests
 
-
-## TODO before action can happen :
-- Create front-end
-    x Create react app
-    x Port TODO MVC
-    x Create some tests
-      x Add SinonJS for mocking
-      x Add enzyme for testing
-      x Don't forget to get Sinon docs
-    x Add proxy to backend for local dev
-    x Create test+compile image
-- Create back-end
-    x Create kotlin backend
-    x Fix rest repository path 
-    x Create some tests
-    x Create test+compile image
-- Create e2e tests
-    x Run wth locally with Testcaffe
-    x Create image
-    x Run e2e tests from previous jobs
-      x Install minio docker image for putting the artifacts ?
-      x Push apps to a CI space in PCF
-- Deploy to CF
-    x Start up PCF-dev
-      x Push apps to prod space in PCF dev
-    - Stand up a MySQL db ??
+- Add front-end, backend
+- Show todo.ci.local.pcfdev.io
+- Add e2e
+- Add package
+- Show todo.local.pcfdev.io
+- Change title to Entreprise-grade todo
+- Watch it propagate
