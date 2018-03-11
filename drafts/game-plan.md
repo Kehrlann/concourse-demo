@@ -26,3 +26,16 @@ Why are we even building something new
 - Show todo.local.pcfdev.io
 - Change title to Entreprise-grade todo
 - Watch it propagate
+
+
+# Before the talk
+ssh start
+cf dev resume
+docker-compose up
+presentation up
+frontend up
+backend up
+check concourse IP = 172.19.0.3
+empty buckets
+delete apps
+-> Check spaces ci and prod, as well as domain ci.apps.local.pcfdev.io
