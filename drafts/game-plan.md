@@ -19,14 +19,27 @@ Why are we even building something new
 - Show tests on the backend, on the front-end
 - Show end-to-end tests
 
-- Add front-end, backend
-- Show todo.ci.local.pcfdev.io
-- Add e2e
-- Add package
-- Show todo.local.pcfdev.io
-- Change title to Entreprise-grade todo
-- Watch it propagate
+- Add backend
+  - explain resource
+- Curl http://todo.ci.local.pcfdev.io/todo
 
+- Add front-end
+  - Show config reuse
+  - Show todo.ci.local.pcfdev.io
+
+- Add e2e
+  - Explain passed
+
+- Add package
+  - Explain that this is for a single team doing both, and integrating
+  - Explain that this gives reproducible deploys
+  - Explain that you could have an extra step
+  - Show todo.local.pcfdev.io
+
+- Talk about microservices and decoupled things
+  - Show decoupled pipeline : pronounce "fan-out"
+  - Change the front-end title
+  - Watch it propagate
 
 # Before the talk
 ssh start
