@@ -11,7 +11,8 @@ cd $SOURCE_DIR
 mvn -s /usr/share/maven/ref/settings.xml \
     clean package \
     -DdisablexmlReport=true \
-    -Dsurefire.useFile=false
+    -Dsurefire.useFile=false \
+    -Dlogging.level.org.springframework=WARN
 
 mkdir -p OUTPUT_DIR
 mv target/*.jar $OUTPUT_DIR/backend-$COMMIT_REF.jar
