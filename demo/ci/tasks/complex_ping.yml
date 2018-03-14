@@ -1,9 +1,9 @@
 ---
 inputs:
-- name: in
+- name: inputdir
 
 outputs:
-- name: out
+- name: outputdir
 
 params:
   COUNT: 1
@@ -19,4 +19,4 @@ run:
   args:
   - "-c"
   - |
-    ping -c $COUNT $(cat in/address.txt) > out/output.log
+    ping -c $COUNT $(cat inputdir/address.txt) > outputdir/output.log
