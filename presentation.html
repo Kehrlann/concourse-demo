@@ -124,7 +124,7 @@
                     - Permet de stocker les state entre deux jobs du pipeline
 
                     - De nombreuses resources supportées : 
-                        - git : TODO-TODO : link
+                        - [git](https://github.com/concourse/git-resource)
                         - s3
                         - time
                         - semver
@@ -201,9 +201,6 @@
                         trigger: true
                       - task: build
                         file: repo/ci/tasks/build-backend.yml
-                        params:
-                          MY_ENV_VAR: value
-                          OTHER_ENV_VAR: morevalues
                       - put: backend-bucket
                         path: output 
                     ```
@@ -231,7 +228,7 @@
 
                     - Toute l'info est dans un fichier de configuration, e.g. `pipeline.yml`
 
-                    - Exemple de pipeline : TODO-TODO
+                    - [Exemple de pipeline](https://ci.concourse-ci.org/teams/resources/pipelines/git)
                 </textarea>
             </section>
 
