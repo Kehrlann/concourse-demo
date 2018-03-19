@@ -27,11 +27,12 @@ describe('TodoForm', () => {
         expect(wrapper.find('input').props().value).toBeTruthy();
     });
 
-    describe('when clicking CREATE', () => {
+    describe('when creating a todo', () => {
         let wrapper: ShallowWrapper;
         const TODO_TEXT = 'TODO';
         let createTodoStub: SinonStub;
         let createTodoPromise: Promise<TodoItem>;
+        const fakeSubmit = { preventDefault: () => { /* noop */ } };
 
         beforeEach(() => {
             createTodoStub = Sinon.stub(TodoService, 'createTodo');
@@ -47,20 +48,20 @@ describe('TodoForm', () => {
         });
 
         it('should clear the text field', () => {
-            wrapper.find('button').simulate('click');
+            wrapper.find('form').simulate('submit', fakeSubmit);
 
             expect(wrapper.find('input').props().value).toBeFalsy();
         });
 
         it('should call the update service', () => {
-            wrapper.find('button').simulate('click');
+            wrapper.find('form').simulate('submit', fakeSubmit);
 
             expect(createTodoStub.calledOnce).toBeTruthy();
             expect(createTodoStub.calledWith(TODO_TEXT)).toBeTruthy();
         });
 
         it('should call the onTodoAdded callback', async () => {
-            wrapper.find('button').simulate('click');
+            wrapper.find('form').simulate('submit', fakeSubmit);
 
             await createTodoPromise;
 
