@@ -4,14 +4,7 @@ set -eu
 
 OUTPUT_DIR=$PWD/build
 GIT_REPO="$PWD/repo/.git"
-
-# This allows running tasks with `fly execute`
-# Because fly execute does not upload the git repo
-if [ -f "$GIT_REPO/ref" ]; then
-  COMMIT_REF=$(cat $GIT_REPO/ref)
-else
-  COMMIT_REF="local"
-fi
+COMMIT_REF=$(cat $GIT_REPO/ref || echo local)
 
 cd repo/demo/frontend
 mv /tmp/node_modules .
