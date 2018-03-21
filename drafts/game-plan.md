@@ -51,15 +51,15 @@
   - Watch it propagate
 
 # Before the talk
-ssh start
-cf dev resume
-docker-compose up
-presentation up
-frontend up
-backend up
-check concourse IP = 172.19.0.3
-remove ~/tmp/concourse/out/output.log
-Make sure git repo is clean
-empty buckets
-delete apps
--> Check spaces ci and prod, as well as domain ci.apps.local.pcfdev.io
+- ssh start
+- cf dev resume
+- docker-compose up
+- presentation up
+- frontend up
+- backend up
+- check concourse IP = 172.19.0.3
+- remove ~/tmp/concourse/out/output.log
+- Make sure git repo is clean
+- empty buckets
+- delete apps
+- -> Check spaces ci and prod, as well as domain ci.apps.local.pcfdev.io
