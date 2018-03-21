@@ -2,8 +2,6 @@
 
 ## Présentation Générale
 ### Historique
-### "vs"
-Why are we even building something new
 ### Qui utilise Concourse
 
 ## Détails de fonctionnement
@@ -15,6 +13,17 @@ Why are we even building something new
 ### CLI tool : `fly`
 
 ## Action !
+- Ping : show the basic pipleine
+  - set-it
+  - watch it work
+- Ping : send the task
+- Ping : send the task with input and output
+  - before : tree the demo directory
+  - show input
+  - run it
+  - show ouptut.log
+- QUESTIONS !!
+
 - Show the app
 - Show tests on the backend, on the front-end
 - Show end-to-end tests
