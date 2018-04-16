@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Concourse, l'intégration Cloud Native</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <style type="text/css">
+        .reveal section img
+        {
+            border: none;
+            background: none;
+            box-shadow: none;
+        }
+
+        .footer {
+            z-index: 10;
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 40px;
+            background-position: center top;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+          <section data-markdown data-background-image="img/devoxx-bg.png">
+                <textarea data-template>
+                    # Concourse
+                    ## Cloud-Native CI/CD
+                    <br>
+                    #### Devoxx France 
+                    #### Paris
+                    #### 18 / 08 / 2018
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Daniel Garnier-Moiroux
+
+                    <br>
+                    <br>
+                    <br>
+
+                    Software Engineer @ Pivotal Labs
+
+                    [dgarnier@pivotal.io](mailto:dgarnier@pivotal.io)
+
+                    [@Kehrlann](https://twitter.com/kehrlann)
+
+                    [Kehrlann @ github](https://github.com/Kehrlann)
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Ca peut aller un peu vite
+                    #### On aura du temps pour les questions
+                    #### Et le talk est enregistré
+
+                    <br>
+
+                    <img src="/img/bring-it-on.webp" height=400 />
+
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Au programme aujourd'hui
+                    - Principes fondamentaux
+
+                    - Concepts et fonctionnement
+                        - Resources, jobs, pipelines
+                        - GUI immutable, outil CLI _fly_
+
+                    - Démo de l'outil avec un mini pipeline
+
+                    - Ton premier (vrai) pipeline
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+
+                    <img src="/img/concourse-logo.png" height=200 />
+
+                    # Principes
+                    <br>
+                    <br>
+                    <br>
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Concourse 
+
+                    - Quelques principes fondamentaux
+                        - **Containers first** : les jobs tournent dans des containers, stateless
+                        - **Stateless workers** : des _resources_ externes pour le state
+                        - **Pipeline first** : Concourse a été fait pour des pipelines
+                        - **Configuration as code** : toute la config est dans des fichiers YAML
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+
+                    <img src="/img/concourse-logo.png" height=200 />
+
+                    # Sous le capot ...
+                    <br>
+                    <br>
+                    <br>
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Resource
+                    
+                    - Permet de stocker les state entre deux jobs du pipeline
+
+                    - De nombreuses resources supportées : 
+                        - [git](https://github.com/concourse/git-resource)
+                        - s3
+                        - time
+                        - semver
+                        - cf
+                        - ...
+                        - Plein de resources community ! (github, slack, jira, sonar ...) 
+
+                    - Brique de base, que Concourse peut:
+                        - _check_, pour découvrir des nouvelles versions
+                        - _get_, pour l'utiliser dans un job/task
+                        - _put_, pour y envoyer le résultat d'un job/task
+
+                    - Simple à implémenter: trois scripts (max) dans un container de votre choix
+                </textarea>
+            </section>
+            
+            <section data-markdown>
+                <textarea data-template>
+                    ## Exemple de resource : git
+
+                    - Définition :
+
+                    ```yaml
+                    resources:
+                    - name: backend-repo
+                      type: git
+                      source:
+                        uri: git@github.com/Kehrlann/concourse-demo.git
+                        branch: master
+                        private_key: ...
+                        paths: [ci, backend]
+                    ```
+
+                    - Utilisation :
+
+                    ```yaml
+                    jobs:
+                    - name: build-backend
+                      plan:
+                      - get: repo
+                        resource: backend-repo
+                        trigger: true
+                      - ... [other tasks] ...
+                    ```
+                </textarea>
+            </section>
+            
+            <section data-markdown>
+                <textarea data-template>
+                    ## Jobs
+
+                    - Deuxième brique de base
+
+                    - Série de steps:
+                        - _task_, pour exécuter du code arbitraire dans un container
+                        - _get_, pour récupérer des resources à utiliser en input
+                            - Peut entraîner l'exécution du job ou non, via un flag _trigger_ 
+                        - _put_, pour pousser des outputs de jobs vers des resources
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Exemple de job
+
+                    ### Dans le code
+
+                    ```yaml
+                    jobs:
+                    - name: build-backend
+                      plan:
+                      - get: repo
+                        resource: backend-repo
+                        trigger: true
+                      - task: build
+                        file: repo/ci/tasks/build-backend.yml
+                      - put: backend-bucket
+                        path: output 
+                    ```
+
+                    ### Dans le GUI
+
+                    <img src="/img/job.png" height=200 />
+
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Pipeline 
+
+                    - Assemblage de jobs qui tournent en parallèle ou séquentiellement
+
+                    - Le lancement des jobs est contrôlé par les _resources_ quand il y a
+                      une nouvelle version disponible
+
+                    - Les pipelines sont construits autour des resources :
+                      - Le job A produit une resource 1
+                      - Le job B consomme la resource 1, si le job A a réussi
+                      - C'est un pipeline [job A] -> (res 1) -> [job B]
+
+                    - Toute l'info est dans un fichier de configuration, e.g. `pipeline.yml`
+
+                    - [Exemple de pipeline](https://ci.concourse-ci.org/teams/resources/pipelines/git)
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Concourse UI 
+
+                    - Le GUI est un site web, immutable
+                    - Interaction via l'outil en CLI _`fly`_
+                        - _`fly set-pipeline`_, _`fly trigger-job`_, ..
+                        - _`fly execute`_ pour envoyer une _task_ à exécuter au worker
+                        - _`fly intercept`_ pour exécuter un shell dans le container d'un job
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+
+                    ## Ca suffit les slides, on veut du code !
+
+                    <img src="/img/cat.webp" />
+                </textarea>
+            </section>
+            </div>
+                <div class="footer">
+                    <img align="left" src="img/devoxx-logo.png" height="40px" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                width: 1400,
+                height: 1080,
+                history: true,
+                dependencies: [
+                { src: 'plugin/markdown/marked.js' },
+                { src: 'plugin/markdown/markdown.js' },
+                { src: 'plugin/notes/notes.js', async: true },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/notes-server/client.js', async: true }
+                ]
+            });
+        </script>
+    </body>
+    </html>
