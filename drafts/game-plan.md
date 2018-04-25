@@ -63,3 +63,4 @@
 - empty buckets
 - delete apps
 - -> Check spaces ci and prod, as well as domain ci.apps.local.pcfdev.io
+- Rebuild docker images for front-end, backend, and e2e
