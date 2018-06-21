@@ -38,7 +38,7 @@ services:
     - "./keys/worker:/concourse-keys"
     - "./worker-state:/worker-state"
     environment:
-      CONCOURSE_TSA_HOST: concourse-web
+      CONCOURSE_TSA_HOST: concourse-web:2222
 
   registry:
     image: registry:2
