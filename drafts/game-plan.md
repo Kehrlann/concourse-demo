@@ -53,6 +53,7 @@
 # Before the talk
 - ssh start
 - cf dev resume
+- Remove worker volume
 - docker-compose up
 - presentation up
 - frontend up
