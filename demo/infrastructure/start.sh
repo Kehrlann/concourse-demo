@@ -34,6 +34,11 @@ function start_pcf() {
 
 function start_concourse() {
   echo
+  echo 'Generating keys for concourse ...'
+  ./generate-keys.sh
+  echo '  OK'
+
+  echo
   echo 'Starting concourse ...'
   docker-compose up -d -V
   echo '  OK'
