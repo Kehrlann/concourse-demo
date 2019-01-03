@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 config:
 - &git-config
-  uri: git@172.19.0.1:~/concourse-demo.git
+  uri: git@git.host.daniel:~/concourse-demo.git
   private_key: {{ssh-key}}
   branch: master
 
