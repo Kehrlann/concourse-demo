@@ -1,0 +1,22 @@
+---
+inputs:
+- name: repo
+- name: backend-bucket
+- name: frontend-bucket
+- name: release-version
+outputs:
+- name: prod
+- name: release
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    skip_download: false
+    repository: "registry:5000/alpine"
+    insecure_registries: ["registry:5000"]
+
+run:
+  path: /bin/ash
+  args:
+  - repo/demo/ci/scripts/package-release-preprod.sh

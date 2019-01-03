@@ -1,0 +1,21 @@
+---
+inputs:
+- name: repo
+outputs:
+- name: prod
+
+params:
+  access_key_id:
+  secret_access_key:
+  endpoint:
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: minio/mc
+
+run:
+  path: /bin/ash
+  args:
+  - repo/demo/ci/scripts/promote-prod.sh
