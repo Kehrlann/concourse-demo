@@ -2,6 +2,11 @@
 
 set -e
 
+echo 'Starting ssh server (needs sudo) ...'
+sudo service ssh start
+echo '  OK'
+echo
+
 echo 'Starting PCF dev ...'
 CF_STATUS=$(cf dev status)
 if [[ "$CF_STATUS" == *"Running"* ]]; then
@@ -19,11 +24,6 @@ else
 fi
 
 echo
-echo 'Starting ssh server (needs sudo) ...'
-sudo service ssh start
-echo '  OK'
-echo
-
 echo 'Starting concourse ...'
 docker-compose up -d -V
 echo '  OK'
