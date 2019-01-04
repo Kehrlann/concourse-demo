@@ -1,9 +1,9 @@
 #!/bin/bash
 
 cf t -s ci
-cf d web-app
-cf d backend
+cf d -f web-app
+cf d -f backend
 
 cf t -s prod 
-cf d web-app
-cf d backend
+cf d -f web-app
+cf d -f backend
