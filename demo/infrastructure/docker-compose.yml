@@ -25,7 +25,7 @@ services:
       - CONCOURSE_EXTERNAL_URL=http://concourse.daniel:8080/
       - CONCOURSE_ADD_LOCAL_USER=test:$$2a$$10$$0W9/ilCpYXY/yCPpaOD.6eCrGda/fnH3D4lhsw1Mze0WTID5BuiTW
       - CONCOURSE_MAIN_TEAM_ALLOW_ALL_USERS=true
-      - CONCOURSE_RESOURCE-CHECKING-INTERVAL=5s
+      - CONCOURSE_RESOURCE_CHECKING_INTERVAL=5s
 
   concourse-worker:
     image: concourse/concourse
