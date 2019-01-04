@@ -22,6 +22,17 @@ function start_concourse() {
   echo '  OK'
 
   echo
+  echo 'Generating tokens for vault ...'
+  ./generate-vault-tokens.sh
+  echo '  OK'
+
+  echo
+  echo 'Loading vault tokens'
+  export VAULT_CLIENT_TOKEN=$(cat keys/vault-client-token.txt)
+  export VAULT_ADMIN_TOKEN=$(cat keys/vault-admin-token.txt)
+  echo '  OK'
+
+  echo
   echo 'Starting concourse ...'
   docker-compose up -d -V
   echo '  OK'

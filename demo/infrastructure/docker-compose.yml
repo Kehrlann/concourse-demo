@@ -56,6 +56,12 @@ services:
       MINIO_SECRET_KEY: changeme
     command: server /export
 
+  vault:
+    image: vault
+    ports: ["8200:8200"]
+    environment:
+    - VAULT_DEV_ROOT_TOKEN_ID=${VAULT_ADMIN_TOKEN}
+
 volumes:
   registry:
     external: true
