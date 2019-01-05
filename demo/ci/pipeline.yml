@@ -8,20 +8,20 @@
 config:
 - &git-config
   uri: git@git.host.daniel:~/concourse-demo.git
-  private_key: {{ssh-key}}
+  private_key: ((id-rsa-git))
   branch: master
 
 - &cf-config
-  api: https://api.local.pcfdev.io
-  username: admin
-  password: admin
+  api: ((cf.api))
+  username: ((cf.username))
+  password: ((cf.password))
   organization: pcfdev-org
   skip_cert_check: true
 
 - &s3-config
-  access_key_id: minio
-  secret_access_key: changeme
-  endpoint: http://minio:9000/
+  access_key_id: ((minio.id))
+  secret_access_key: ((minio.secret))
+  endpoint: ((minio.api))
   skip_ssl_verification: true
 
 

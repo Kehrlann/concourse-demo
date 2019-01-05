@@ -26,6 +26,8 @@ services:
       - CONCOURSE_ADD_LOCAL_USER=test:$$2a$$10$$0W9/ilCpYXY/yCPpaOD.6eCrGda/fnH3D4lhsw1Mze0WTID5BuiTW
       - CONCOURSE_MAIN_TEAM_ALLOW_ALL_USERS=true
       - CONCOURSE_RESOURCE_CHECKING_INTERVAL=5s
+      - CONCOURSE_VAULT_URL=http://vault:8200
+      - CONCOURSE_VAULT_CLIENT_TOKEN=${VAULT_CLIENT_TOKEN}
 
   concourse-worker:
     image: concourse/concourse

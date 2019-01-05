@@ -1,7 +1,7 @@
 config:
 - &git-config
   uri: git@git.host.daniel:~/concourse-demo.git
-  private_key: {{ssh-key}}
+  private_key: ((id-rsa-git))
   branch: master
 
 resources:

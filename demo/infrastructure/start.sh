@@ -79,11 +79,19 @@ function pull_local_alpine() {
   echo '  OK'
 }
 
+function setup_vault() {
+  echo
+  echo 'Setting up vault ...'
+  ./setup-vault.sh
+  echo '  OK'
+}
+
 start_ssh_server
 start_pcf
 setup_cf
 start_concourse
 setup_minio
+setup_vault
 pull_local_alpine
 
 echo
