@@ -6,14 +6,7 @@ CF_STATUS=$(cf dev status)
 if [[ "$CF_STATUS" == *"Running"* ]]; then
   echo "Already running, skipping..."
 elif [[ "$CF_STATUS" == "Suspended" ]]; then
-  set +e
-  SYSTEMCTL_STATUS=$(systemctl --user status cf-dev)
-  set -e
-  if [[ -z "$SYSTEMCTL_STATUS" ]]; then
-    cf dev resume
-  else
-    systemctl --user start cf-dev
-  fi
+  cf dev resume
   echo 'Resumed'
 elif [[ "$CF_STATUS" == *"Stopped"* ]]; then
   cf dev start
