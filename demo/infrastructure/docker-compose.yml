@@ -11,9 +11,8 @@ services:
 
   concourse-web:
     image: concourse/concourse
-    links: [concourse-db]
     command: web
-    depends_on: [concourse-db]
+    depends_on: [concourse-db, vault]
     ports: ['8080:8080']
     volumes: ['./keys/web:/concourse-keys']
     restart: unless-stopped # required so that it retries until concourse-db comes up
@@ -32,8 +31,7 @@ services:
   concourse-worker:
     image: concourse/concourse
     privileged: true
-    links: [concourse-web, registry]
-    depends_on: [concourse-web, registry]
+    depends_on: [concourse-web, registry, git]
     command: worker
     volumes:
       - './keys/worker:/concourse-keys'
@@ -63,6 +61,16 @@ services:
     ports: ["8200:8200"]
     environment:
     - VAULT_DEV_ROOT_TOKEN_ID=${VAULT_ADMIN_TOKEN}
+
+  git:
+    build:
+      context: .
+      dockerfile: alpine-ssh-git-dockerfile
+    image: kehrlann/ssh-git
+    ports: ["2222:22"]
+    volumes:
+      - "./keys/git:/home/git/.ssh"
+      - "../..:/home/git/concourse.git:ro"
 
 volumes:
   registry:

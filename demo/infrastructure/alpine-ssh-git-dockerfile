@@ -1,0 +1,17 @@
+FROM alpine
+
+RUN apk update && apk add openssh-server git
+RUN /usr/bin/ssh-keygen -A
+
+RUN addgroup git && adduser -D -s '' -G git git
+RUN sed -i 's/git:!/git:*/g' /etc/shadow
+USER git
+RUN mkdir -p /home/git/concourse.git
+RUN mkdir -p /home/git/.ssh
+RUN chmod -R 700 /home/git/.ssh
+
+USER root
+EXPOSE 22
+
+# CMD "/usr/sbin/sshd -D"
+CMD ["/usr/sbin/sshd", "-D", "-e"] # "-f", "/etc/ssh/sshd_config"]

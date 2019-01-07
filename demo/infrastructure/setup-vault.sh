@@ -21,7 +21,7 @@ else
 fi
 
 if ! vault list concourse/main/ | grep -q id-rsa-git; then
-  vault kv put concourse/main/id-rsa-git value=@keys/id_rsa
+  vault kv put concourse/main/id-rsa-git value=@keys/git_rsa
 else
   echo '√ vault: ssh key already loaded'
 fi

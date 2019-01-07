@@ -2,9 +2,9 @@
 
 set -e
 
-function start_ssh_server() {
-  echo 'Starting ssh server (needs sudo) ...'
-  sudo service ssh start
+function delete_all_keys() {
+  echo 'Deleting all keys and tokens...'
+  rm -rf keys/*
   echo '  OK'
   echo
 }
@@ -15,15 +15,20 @@ function start_pcf() {
   echo '  OK'
 }
 
-function start_concourse() {
+function start_docker_compose() {
   echo
   echo 'Generating keys for concourse ...'
-  ./generate-keys.sh
+  ./generate-concourse-keys.sh
   echo '  OK'
 
   echo
   echo 'Generating tokens for vault ...'
   ./generate-vault-tokens.sh
+  echo '  OK'
+
+  echo
+  echo 'Generating keys for git ...'
+  ./generate-git-keys.sh
   echo '  OK'
 
   echo
@@ -86,10 +91,10 @@ function setup_vault() {
   echo '  OK'
 }
 
-start_ssh_server
+delete_all_keys
 start_pcf
 setup_cf
-start_concourse
+start_docker_compose
 setup_minio
 setup_vault
 pull_local_alpine
