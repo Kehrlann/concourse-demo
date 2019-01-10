@@ -27,6 +27,11 @@
             background: none;
             box-shadow: none;
         }
+
+        .reveal .centering {
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -37,9 +42,9 @@
                     # Concourse
                     ## Cloud-Native CI/CD
                     <br>
-                    #### CD Meetup
-                    #### Paris
-                    #### 21 / 03 / 2018
+                    #### THE EVENT
+                    #### Somewhere
+                    #### dd / mm /2019
                 </textarea>
             </section>
 
@@ -53,24 +58,26 @@
 
                     Software Engineer @ Pivotal Labs
 
-                    [dgarnier@pivotal.io](mailto:dgarnier@pivotal.io)
+                    [@Kehrlann](https://twitter.com/Kehrlann)
 
-                    [Kehrlann @ github](https://github.com/Kehrlann)
-
-                    [dgarnier @ Slack](https://concourseci.slack.com)
+                    [github.com/Kehrlann](https://github.com/Kehrlann)
                 </textarea>
             </section>
 
             <section data-markdown>
                 <textarea data-template>
-                    ## Ca peut aller un peu vite
-                    #### On aura du temps pour les questions
-                    #### Et le talk est enregistré
+                    ## CI/CD pour le cloud
+
+                    Le cloud a bouleversé nos pratiques et nos technologies:
+                    - Microservices
+                    - Containers
+                    - Infrastructure as code
+                    - Zero-downtime deploys
+                    - Continuous delivery
+                    - ...
 
                     <br>
-
-                    <img src="/img/bring-it-on.webp" height=400 />
-
+                    Et si nos outils de CI étaient conçus pour ces nouveaux paradigmes ?
                 </textarea>
             </section>
 
@@ -84,9 +91,11 @@
                         - GUI immutable, outil CLI _fly_
                         - Architecture
 
+                    - Un job éxécuté par Concourse
+
                     - Démo de l'outil avec un mini pipeline
 
-                    - Ton premier (vrai) pipeline
+                    - Construction d'un vrai pipeline
                 </textarea>
             </section>
 
@@ -104,11 +113,7 @@
 
             <section data-markdown>
                 <textarea data-template>
-                    ## Concourse 
-
-                    - Créé en 2014 chez Pivotal, pour les besoins de CI dans les équipes de développement de Pivotal Cloud Foundry
-                        - Insatisfaction avec les outils existants (SaaS ou hosted)
-                        - Expertise sur les containers acquise avec Cloud Foundry
+                    ## Concourse
 
                     - Quelques principes fondamentaux
                         - **Containers first** : les jobs tournent dans des containers
@@ -121,7 +126,7 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Qui utilise Concourse ?
-                    
+
                     <img src="/img/logos.png" height=640 />
 
                 </textarea>
@@ -142,17 +147,17 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Resource
-                    
-                    - Permet de stocker les state entre deux jobs du pipeline
 
-                    - De nombreuses resources supportées : 
+                    - Permet de stocker les _états_ entre deux jobs du pipeline
+
+                    - De nombreuses resources supportées :
                         - [git](https://github.com/concourse/git-resource)
                         - s3
                         - time
                         - semver
                         - cf
                         - ...
-                        - Plein de resources community ! (github, slack, jira, sonar ...) 
+                        - Plein de resources community ! (github, slack, jira, sonar, [weather](https://github.com/Kehrlann/weather-resource) ...)
 
                     - Brique de base, que Concourse peut:
                         - _check_, pour découvrir des nouvelles versions
@@ -162,7 +167,7 @@
                     - Simple à implémenter: trois scripts (max) dans un container de votre choix
                 </textarea>
             </section>
-            
+
             <section data-markdown>
                 <textarea data-template>
                     ## Exemple de resource : git
@@ -193,7 +198,7 @@
                     ```
                 </textarea>
             </section>
-            
+
             <section data-markdown>
                 <textarea data-template>
                     ## Jobs
@@ -203,7 +208,7 @@
                     - Série de steps:
                         - _task_, pour exécuter du code arbitraire dans un container
                         - _get_, pour récupérer des resources à utiliser en input
-                            - Peut entraîner l'exécution du job ou non, via un flag _trigger_ 
+                            - Peut entraîner l'exécution du job ou non, via un flag _trigger_
                         - _put_, pour pousser des outputs de jobs vers des resources
                 </textarea>
             </section>
@@ -224,7 +229,7 @@
                       - task: build
                         file: repo/ci/tasks/build-backend.yml
                       - put: backend-bucket
-                        path: output 
+                        path: output
                     ```
 
                     ### Dans le GUI
@@ -236,27 +241,43 @@
 
             <section data-markdown>
                 <textarea data-template>
-                    ## Pipeline 
+                    ## Pipeline
 
                     - Assemblage de jobs qui tournent en parallèle ou séquentiellement
 
-                    - Le lancement des jobs est contrôlé par les _resources_ quand il y a
-                      une nouvelle version disponible
-
-                    - Les pipelines sont construits autour des resources :
-                      - Le job A produit une resource 1
-                      - Le job B consomme la resource 1, si le job A a réussi
-                      - C'est un pipeline [job A] -> (res 1) -> [job B]
+                    - Exemple de pipeline: [la CI de Concourse](https://ci.concourse-ci.org/teams/resources/pipelines/git)
 
                     - Toute l'info est dans un fichier de configuration, e.g. `pipeline.yml`
 
-                    - [Exemple de pipeline](https://ci.concourse-ci.org/teams/resources/pipelines/git)
                 </textarea>
             </section>
 
             <section data-markdown>
                 <textarea data-template>
-                    ## Concourse UI 
+                    ## Jobs + resources = pipeline
+
+                    - Le lancement des jobs est contrôlé par les _resources_ quand il y a
+                      une nouvelle version disponible
+
+                    - Les dépendances entre jobs sont exprimées à travers les _resources_:
+
+                      - **`first-job`** et **`second-job`** tous deux la _resource_ **`a-resource`**
+
+                      <div class="centering">
+                        <img src="/img/resource-independent.png" height=200 />
+                      </div>
+
+                      - **`second-job`** consomme uniquement les versions de **`a-resource`** validées par **`first-job`**
+
+                      <div class="centering">
+                        <img src="/img/resource-dependency.png" height=100 />
+                      </div>
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Concourse UI
 
                     - Le GUI est un site web, immutable
                     - Interaction via l'outil en CLI _`fly`_
@@ -270,8 +291,86 @@
                 <textarea data-template>
                     ## Architecture
 
-                    <img src="/img/architecture.png" height=800 />
+                    <img src="/img/concourse_architecture.png" height=800 />
 
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Architecture - Haut niveau
+
+                    <img src="/img/concourse-architecture-1.png" height=800 />
+
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Architecture - Worker
+
+                    <img src="/img/concourse-architecture-2.png" height=800 />
+
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+
+                    <img src="/img/concourse-logo.png" height=200 />
+
+                    # Un job éxécuté par Concourse
+                    <br>
+                    <br>
+                    <br>
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-1.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-2.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-3.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-4.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-5.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-6.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-7.png" height=800 />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    <img src="/img/job-concourse-8.png" height=800 />
                 </textarea>
             </section>
 
@@ -298,6 +397,7 @@
                 width: 1400,
                 height: 1080,
                 history: true,
+                transition: 'none',
                 dependencies: [
                 { src: 'plugin/markdown/marked.js' },
                 { src: 'plugin/markdown/markdown.js' },
