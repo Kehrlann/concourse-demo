@@ -38,6 +38,11 @@ function start_docker_compose() {
   echo '  OK'
 
   echo
+  echo 'Creating registry volume ...'
+  docker volume create --name=registry
+  echo '  OK'
+
+  echo
   echo 'Starting concourse ...'
   docker-compose up -d -V
   echo '  OK'
