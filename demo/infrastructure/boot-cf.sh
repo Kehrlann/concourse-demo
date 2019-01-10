@@ -8,7 +8,7 @@ if [[ "$CF_STATUS" == *"Running"* ]]; then
 elif [[ "$CF_STATUS" == "Suspended" ]]; then
   cf dev resume
   echo 'Resumed'
-elif [[ "$CF_STATUS" == *"Stopped"* ]]; then
+elif [[ "$CF_STATUS" == *"Stopped"* ]] || [[ "$CF_STATUS" == "Not Created" ]]; then
   cf dev start
   echo 'Started'
 else
