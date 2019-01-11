@@ -18,7 +18,7 @@ function start_pcf() {
 function start_docker_compose() {
   echo
   echo 'Generating keys for concourse ...'
-  ./generate-concourse-keys.sh
+  ./generate-concourse-keys.sh --use-pem
   echo '  OK'
 
   echo
