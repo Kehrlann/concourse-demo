@@ -82,10 +82,10 @@ function setup_minio() {
   echo '  OK'
 }
 
-function pull_local_alpine() {
+function pull_local_images() {
   echo
-  echo 'Pulling local alpine ...'
-  ./pull-local-alpine.sh
+  echo 'Pulling local docker images ...'
+  ./pull-local-images.sh
   echo '  OK'
 }
 
