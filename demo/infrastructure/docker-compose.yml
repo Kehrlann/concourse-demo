@@ -40,7 +40,6 @@ services:
 
   registry:
     image: registry:2
-    depends_on: [concourse-web]
     volumes:
       - 'registry:/var/lib/registry'
     ports:
@@ -48,7 +47,6 @@ services:
 
   minio:
     image: minio/minio
-    depends_on: [concourse-web]
     ports:
       - '9000:9000'
     environment:
