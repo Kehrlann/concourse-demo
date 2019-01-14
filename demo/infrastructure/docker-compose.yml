@@ -42,6 +42,7 @@ services:
     image: registry:2
     volumes:
       - 'registry:/var/lib/registry'
+      - './registry:/etc/docker/registry'
     ports:
       - '5000:5000'
 
