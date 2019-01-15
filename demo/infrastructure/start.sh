@@ -102,7 +102,7 @@ setup_cf
 start_docker_compose
 setup_minio
 setup_vault
-pull_local_alpine
+pull_local_images
 
 echo
 echo
