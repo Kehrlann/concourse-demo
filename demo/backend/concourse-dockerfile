@@ -14,4 +14,4 @@ RUN mvn clean package \
     -Dmaven.test.failure.ignore=true
 
 # Delete the repo from the image
-RUN rm -rf /tmp
+RUN rm -rf /tmp/backend

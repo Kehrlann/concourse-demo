@@ -2,6 +2,7 @@
 
 set -eu
 
+FORCE_BUILD=${1:-""}
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="$SCRIPT_DIR/../../"
 
@@ -14,8 +15,13 @@ function build_local_image() {
     echo "x image $base_image_name not found locally, building ..."
     docker build -f "$dockerfile" -t "$image_name" "$path"
     docker push "$image_name"
+  elif [[ -n $FORCE_BUILD ]]; then
+    echo "x force-building $base_image_name ..."
+    docker build -f "$dockerfile" -t "$image_name" "$path"
+    docker push "$image_name"
   else
     echo "√ image $base_image_name already exists in local registry"
+    return
   fi
 }
 

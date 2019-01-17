@@ -5,5 +5,5 @@ ADD . /tmp/frontend
 RUN cd /tmp/frontend && \
     yarn install && \
     mv node_modules /tmp && \
-    rm -rf /tmp
+    rm -rf /tmp/frontend
 
