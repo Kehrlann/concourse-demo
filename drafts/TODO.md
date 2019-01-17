@@ -4,12 +4,13 @@
 [x] Add a container for git repo
 [x] Recreate all keys before starting
 [x] Basic kubernetes tutorial
-[ ] Spring: Deploy on Kubernetes manually
-[ ] Angular: Deploy on Kubernetes manually
-[ ] Single deployment with both apps in one pod ?
+[x] Spring: Deploy on Kubernetes manually
+[x] Angular: Deploy on Kubernetes manually
+[x] Use ingress to expose both apps
 [ ] Deploy on Kubernetes through Concourse
-[ ] Read about Jib + spring
+[ ] Single deployment with both apps in one pod ?
 
 Optional:
 [ ] Update CF manifests to use only one
-[ ] Add script for building all required images locally
+[x] Add script for building all required images locally
+[ ] Read about Jib + spring
