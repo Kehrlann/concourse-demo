@@ -6,7 +6,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: "registry:5000/e2e-image"
+    repository: "registry:5000/todo-run-e2e"
     insecure_registries: ["registry:5000"]
 
 run:

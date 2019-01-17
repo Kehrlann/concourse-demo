@@ -8,7 +8,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: "registry:5000/backend-image"
+    repository: "registry:5000/todo-build-backend"
     insecure_registries: ["registry:5000"]
 
 run:
