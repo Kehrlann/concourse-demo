@@ -8,6 +8,7 @@ export VAULT_ADMIN_TOKEN="FAKE_ADMIN_TOKEN"
 function start_registry() {
   echo 'Starting registry in mirror mode...'
   docker-compose -f docker-compose.yml -f docker-compose.registry.yml up -d registry
+  sleep 3
   echo '√ OK'
 }
 
@@ -22,7 +23,7 @@ function check_for_mirror() {
     echo '√ docker daemon has a mirror, pulling required images'
   else
     echo 'x docker daemon is not configured with a mirror. Skipping initial pull.'
-    echo 0
+    exit 0
   fi
 }
 
@@ -42,3 +43,4 @@ check_for_mirror
 start_registry
 pull_and_save alpine
 pull_and_save openjdk 8-jre-alpine
+pull_and_save nginx "1.15.8-alpine"
