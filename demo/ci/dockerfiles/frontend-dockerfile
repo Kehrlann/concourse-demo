@@ -1,9 +1,0 @@
-FROM node
-
-ADD . /tmp/repo
-
-RUN cd /tmp/repo/demo/frontend && \    
-    yarn install && \
-    mv node_modules /tmp && \
-    rm -rf /tmp/repo
-
