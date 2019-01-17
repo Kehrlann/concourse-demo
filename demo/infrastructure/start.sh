@@ -99,10 +99,10 @@ function setup_vault() {
 delete_all_keys
 start_pcf
 setup_cf
+pull_local_images
 start_docker_compose
 setup_minio
 setup_vault
-pull_local_images
 
 echo
 echo

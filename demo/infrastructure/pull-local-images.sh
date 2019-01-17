@@ -2,6 +2,21 @@
 
 set -eu
 
+export VAULT_CLIENT_TOKEN="FAKE_CLIENT_TOKEN"
+export VAULT_ADMIN_TOKEN="FAKE_ADMIN_TOKEN"
+
+function start_registry() {
+  echo 'Starting registry in mirror mode...'
+  docker-compose -f docker-compose.yml -f docker-compose.registry.yml up -d registry
+  echo '√ OK'
+}
+
+function stop_registry() {
+  echo 'Stopping registry...'
+  docker-compose down -v
+  echo '√ OK'
+}
+
 function check_for_mirror() {
   if grep mirror /etc/docker/daemon.json; then
     echo '√ docker daemon has a mirror, pulling required images'
@@ -21,6 +36,9 @@ function pull_and_save() {
   fi
 }
 
+trap stop_registry EXIT
+
 check_for_mirror
+start_registry
 pull_and_save alpine
 pull_and_save openjdk 8-jre-alpine

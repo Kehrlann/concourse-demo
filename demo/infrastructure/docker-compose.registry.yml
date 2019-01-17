@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  registry:
+    volumes:
+      - './registry:/etc/docker/registry'
