@@ -89,6 +89,13 @@ function pull_local_images() {
   echo '  OK'
 }
 
+function build_base_images() {
+  echo
+  echo 'Building base images ...'
+  ./build-base-images.sh
+  echo '  OK'
+}
+
 function setup_vault() {
   echo
   echo 'Setting up vault ...'
@@ -103,6 +110,7 @@ pull_local_images
 start_docker_compose
 setup_minio
 setup_vault
+build_base_images
 
 echo
 echo
