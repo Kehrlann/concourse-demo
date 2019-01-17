@@ -8,6 +8,8 @@ jobs:
         type: docker-image
         source:
           repository: "alpine"
+          registry_mirror: "http://registry:5000"
+          insecure_registries: ["registry:5000"]
       run:
         path: "/bin/ping"
         args:
