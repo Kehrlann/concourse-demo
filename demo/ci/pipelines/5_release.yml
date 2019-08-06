@@ -149,7 +149,7 @@ jobs:
 
 - name: release
   plan:
-  - aggregate:
+  - in_parallel:
     - get: frontend-bucket
       passed: [e2e]
       trigger: true
@@ -164,7 +164,7 @@ jobs:
       trigger: true
   - task: repackage
     file: repo/demo/ci/tasks/package-release.yml
-  - aggregate:
+  - in_parallel:
     - put: cf-prod
       params:
         manifest: prod/manifest.yml

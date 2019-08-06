@@ -131,7 +131,7 @@ jobs:
 
 - name: deploy-backend
   plan:
-  - aggregate:
+  - in_parallel:
     - get: backend-bucket
       passed: [e2e]
       trigger: true
@@ -145,7 +145,7 @@ jobs:
 
 - name: deploy-frontend
   plan:
-  - aggregate:
+  - in_parallel:
     - get: frontend-bucket
       passed: [e2e]
       trigger: true
