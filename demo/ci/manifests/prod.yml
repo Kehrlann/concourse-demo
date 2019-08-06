@@ -1,7 +1,8 @@
 ---
 applications:
 - name: backend
-  buildpack: java_buildpack_offline
+  buildpacks:
+  - java_buildpack_offline
   instances: 1
   memory: 768M
   disk_quota: 256M
@@ -10,7 +11,8 @@ applications:
   path: backend/todo.jar
 
 - name: web-app
-  buildpack: staticfile_buildpack
+  buildpacks:
+  - staticfile_buildpack
   instances: 1
   memory: 64M
   disk_quota: 256M

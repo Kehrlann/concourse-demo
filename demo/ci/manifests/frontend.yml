@@ -1,7 +1,8 @@
 ---
 applications:
 - name: web-app
-  buildpack: staticfile_buildpack
+  buildpacks:
+  - staticfile_buildpack
   instances: 1
   memory: 64M
   disk_quota: 256M
