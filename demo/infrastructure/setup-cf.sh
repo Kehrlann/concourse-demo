@@ -2,4 +2,4 @@
 
 cf create-space ci
 cf create-space prod
-cf create-domain pcfdev-org ci.local.pcfdev.io
+cf create-domain cfdev-org ci.local.pcfdev.io
