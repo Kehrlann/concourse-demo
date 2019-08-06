@@ -1,7 +1,7 @@
 ---
 applications:
 - name: backend
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
   instances: 1
   memory: 512M
   disk_quota: 256M
