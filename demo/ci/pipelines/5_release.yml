@@ -168,7 +168,6 @@ jobs:
     - put: cf-prod
       params:
         manifest: prod/manifest.yml
-        path: prod
     - put: release-bucket
       params:
         file: release/todo-*.tgz
