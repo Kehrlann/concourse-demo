@@ -6,4 +6,4 @@ applications:
   memory: 64M
   disk_quota: 256M
   routes:
-  - route: todo.local.pcfdev.io
+  - route: todo.dev.cfdev.sh

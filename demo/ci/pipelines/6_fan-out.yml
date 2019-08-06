@@ -8,7 +8,7 @@ config:
   api: ((cf.api))
   username: ((cf.username))
   password: ((cf.password))
-  organization: pcfdev-org
+  organization: cfdev-org
   skip_cert_check: true
 
 - &s3-config

@@ -9,7 +9,7 @@ else
 fi
 
 if ! vault list concourse/main/ | grep -q cf; then
-  vault kv put concourse/main/cf api='https://api.local.pcfdev.io' username='admin' password='admin'
+  vault kv put concourse/main/cf api='https://api.dev.cfdev.sh' username='admin' password='admin'
 else
   echo '√ vault: CF secrets already loaded'
 fi

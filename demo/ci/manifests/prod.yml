@@ -6,7 +6,7 @@ applications:
   memory: 512M
   disk_quota: 256M
   routes:
-  - route: todo.local.pcfdev.io/api
+  - route: todo.dev.cfdev.sh/api
   path: backend/todo.jar
 
 - name: web-app
@@ -15,5 +15,5 @@ applications:
   memory: 64M
   disk_quota: 256M
   routes:
-  - route: todo.local.pcfdev.io
+  - route: todo.dev.cfdev.sh
   path: frontend
