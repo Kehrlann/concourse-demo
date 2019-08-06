@@ -12,4 +12,8 @@ image_resource:
 run:
   path: /bin/bash
   args:
-  - repo/demo/ci/scripts/run-e2e.sh
+  - -euc
+  - |
+    cd repo/demo/frontend
+    mv /tmp/node_modules .
+    APP_URL=http://todo.ci.dev.cfdev.sh yarn e2e-ci
