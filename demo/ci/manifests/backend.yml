@@ -3,7 +3,7 @@ applications:
 - name: backend
   buildpack: java_buildpack_offline
   instances: 1
-  memory: 512M
+  memory: 768M
   disk_quota: 256M
   routes:
   - route: todo.ci.dev.cfdev.sh/api
