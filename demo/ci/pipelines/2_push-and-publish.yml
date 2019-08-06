@@ -25,7 +25,6 @@ resources:
     paths:
     - demo/backend
     - demo/ci/tasks/test-and-build-backend.yml
-    - demo/ci/scripts/test-and-build-backend.sh
     - demo/ci/manifests/backend.yml
 
 - name: cf-dev
