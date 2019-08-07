@@ -1,0 +1,77 @@
+config:
+- &git-config
+  uri: git@git:~/concourse.git
+  private_key: ((id-rsa-git))
+  branch: master
+
+resources:
+- name: backend-image-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/backend/pom.xml
+    - demo/backend/concourse-dockerfile
+
+- name: frontend-image-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/frontend/package.json
+    - demo/frontend/yarn.lock
+    - demo/frontend/concourse-dockerfile
+
+- name: e2e-image-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/frontend/concourse-e2e-dockerfile
+
+- name: backend-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/backend-image"
+
+- name: frontend-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/frontend-image"
+
+- name: e2e-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/e2e-image"
+
+
+jobs:
+- name: build-backend-image
+  plan:
+  - get: repo
+    resource: backend-image-repo
+  - put: backend-image
+    params:
+      build: repo/demo/backend
+      dockerfile: repo/demo/backend/concourse-dockerfile
+
+- name: build-frontend-image
+  plan:
+  - get: repo
+    resource: frontend-image-repo
+  - put: frontend-image
+    params:
+      build: repo/demo/frontend
+      dockerfile: repo/demo/frontend/concourse-dockerfile
+
+- name: build-e2e-image
+  plan:
+  - get: repo
+    resource: e2e-image-repo
+  - put: e2e-image
+    params:
+      build: repo/demo/frontend
+      dockerfile: repo/demo/frontend/concourse-e2e-dockerfile
