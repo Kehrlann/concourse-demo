@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo
+spec:
+  selector:
+    matchLabels:
+      app: todo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+        - name: backend
+          image: "registry:5000/todo-backend"
+          ports:
+            - name: backend
+              containerPort: 8080
+        - name: frontend
+          image: "registry:5000/todo-frontend"
+          ports:
+            - name: frontend
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-service
+spec:
+  selector:
+    app: todo
+  ports:
+    - name: frontend
+      protocol: TCP
+      port: 80
+      targetPort: frontend
+    - name: backend
+      protocol: TCP
+      port: 8080
+      targetPort: backend
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: todo
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
+spec:
+  rules:
+    - host: todo.kube.daniel
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: todo-service
+              servicePort: frontend
+          - path: /api
+            backend:
+              serviceName: todo-service
+              servicePort: backend
