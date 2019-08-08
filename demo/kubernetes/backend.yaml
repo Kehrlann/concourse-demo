@@ -25,10 +25,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: todo-backend
+  name: todo-backend-service
 spec:
   selector:
-    app: todo-backend
+    app: todo
   ports:
     - protocol: TCP
       port: 8080
@@ -39,7 +39,6 @@ kind: Ingress
 metadata:
   name: todo
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
 spec:
   rules:
@@ -48,5 +47,5 @@ spec:
         paths:
           - path: /api
             backend:
-              serviceName: todo-backend
+              serviceName: todo-backend-service
               servicePort: 8080
