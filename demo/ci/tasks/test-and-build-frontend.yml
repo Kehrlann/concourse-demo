@@ -19,7 +19,6 @@ run:
     OUTPUT_DIR=$PWD/build
     GIT_REPO="$PWD/repo/.git"
     COMMIT_REF=$(cat $GIT_REPO/ref || echo local)
-    CURRENT_DATE=$(date +%Y-%m-%d-%H%M)
 
     cd repo/demo/frontend
     mv /tmp/node_modules .
@@ -29,4 +28,4 @@ run:
     mkdir -p $OUTPUT_DIR
     cp -R build $OUTPUT_DIR
     cp Dockerfile "$OUTPUT_DIR"
-    echo "${CURRENT_DATE}_${COMMIT_REF}" | tee "$OUTPUT_DIR/tags.txt"
+    echo "${COMMIT_REF}" | tee "$OUTPUT_DIR/tags.txt"
