@@ -103,9 +103,11 @@ function setup_vault() {
   echo '  OK'
 }
 
+if [[ "$1" == "--with-cf" ]]; then
+  start_pcf
+  setup_cf
+fi
 delete_all_keys
-start_pcf
-setup_cf
 pull_local_images
 start_docker_compose
 setup_minio
