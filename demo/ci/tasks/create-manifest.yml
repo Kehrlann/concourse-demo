@@ -1,0 +1,31 @@
+---
+inputs:
+- name: frontend-repo
+- name: backend-repo
+- name: e2e-repo
+outputs:
+- name: manifests
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    skip_download: false
+    repository: "registry:5000/alpine"
+    insecure_registries: ["registry:5000"]
+
+run:
+  path: /bin/ash
+  args:
+  - -euc
+  - |
+    function get_commit_ref() { cat $PWD/$1/.git/ref; };
+
+    MANIFEST_FOLDER=$PWD/manifests
+    BACKEND_COMMIT=$(get_commit_ref backend-repo)
+    FRONTEND_COMMIT=$(get_commit_ref frontend-repo)
+
+    cat e2e-repo/demo/kubernetes/todo.yaml \
+    | sed "s/\(registry:5000\/todo-backend\)/\1:$BACKEND_COMMIT/" \
+    | sed "s/\(registry:5000\/todo-frontend\)/\1:$FRONTEND_COMMIT/" \
+    | tee manifests/todo.yaml
