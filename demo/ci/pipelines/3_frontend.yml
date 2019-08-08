@@ -1,0 +1,61 @@
+config:
+- &git-config
+  uri: git@git:~/concourse.git
+  private_key: ((id-rsa-git))
+  branch: master
+
+resources:
+- name: backend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/backend
+    - demo/ci/tasks/test-and-build-backend.yml
+    - demo/ci/manifests/backend.yml
+
+- name: frontend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/frontend
+    - demo/ci/tasks/test-and-build-frontend.yml
+    - demo/ci/manifests/frontend.yml
+
+- name: backend-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/todo-backend"
+
+- name: frontend-image
+  type: docker-image
+  source:
+    insecure_registries: ["registry:5000"]
+    repository: "registry:5000/todo-frontend"
+
+jobs:
+- name: backend
+  plan:
+  - get: repo
+    resource: backend-repo
+    trigger: true
+  - task: build
+    file: repo/demo/ci/tasks/test-and-build-backend.yml
+  - put: backend-image
+    params:
+      build: build
+      additional_tags: build/tags.txt
+
+- name: frontend
+  plan:
+  - get: repo
+    resource: frontend-repo
+    trigger: true
+  - task: build
+    file: repo/demo/ci/tasks/test-and-build-frontend.yml
+  - put: frontend-image
+    params:
+      build: build
+      additional_tags: build/tags.txt

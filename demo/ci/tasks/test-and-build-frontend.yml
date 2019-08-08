@@ -19,15 +19,14 @@ run:
     OUTPUT_DIR=$PWD/build
     GIT_REPO="$PWD/repo/.git"
     COMMIT_REF=$(cat $GIT_REPO/ref || echo local)
-    # Run tests and build
+    CURRENT_DATE=$(date +%Y-%m-%d-%H%M)
+
     cd repo/demo/frontend
     mv /tmp/node_modules .
     CI=true yarn test
     yarn build
-    # Copy the files for deploying to CF
-    mkdir -p $OUTPUT_DIR/dist
-    cp -R build/* $OUTPUT_DIR/dist
-    # Package the artifact to upload to minio
-    TAR_FILE="frontend-$COMMIT_REF.tgz"
-    tar -czf $TAR_FILE -C build .
-    mv $TAR_FILE $OUTPUT_DIR
+
+    mkdir -p $OUTPUT_DIR
+    cp -R build $OUTPUT_DIR
+    cp Dockerfile "$OUTPUT_DIR"
+    echo "${CURRENT_DATE}_${COMMIT_REF}" | tee "$OUTPUT_DIR/tags.txt"
