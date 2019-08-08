@@ -28,6 +28,7 @@ metadata:
 spec:
   selector:
     app: todo
+    tier: frontend
   ports:
     - protocol: TCP
       port: 80
@@ -36,7 +37,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: todo
+  name: todo-frontend
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
 spec:
