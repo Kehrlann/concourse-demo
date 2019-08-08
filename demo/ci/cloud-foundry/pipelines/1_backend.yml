@@ -14,12 +14,12 @@ resources:
     - demo/ci/tasks/test-and-build-backend.yml
     - demo/ci/manifests/backend.yml
 
-- name: backend-image
-  type: docker-image
-  source:
-    insecure_registries: ["registry:5000"]
-    repository: "registry:5000/todo-backend"
-
+#------------------------------------------------------------------------------
+#
+# Jobs :
+# All the jobs that constitue the pipeline.
+#
+#------------------------------------------------------------------------------
 jobs:
 - name: backend
   plan:
@@ -28,7 +28,3 @@ jobs:
     trigger: true
   - task: build
     file: repo/demo/ci/tasks/test-and-build-backend.yml
-  - put: backend-image
-    params:
-      build: build
-      additional_tags: build/tags.txt

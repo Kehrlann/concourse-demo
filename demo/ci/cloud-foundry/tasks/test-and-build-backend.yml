@@ -20,7 +20,6 @@ run:
     SOURCE_DIR=$PWD/repo/demo/backend
     OUTPUT_DIR=$PWD/build
     COMMIT_REF=$(cat $GIT_DIR/ref || echo test)
-    CURRENT_DATE=$(date +%Y-%m-%d-%H%M)
     cd $SOURCE_DIR
 
     mvn -s /usr/share/maven/ref/settings.xml \
@@ -30,6 +29,4 @@ run:
         -Dlogging.level.org.springframework=WARN
 
     mkdir -p OUTPUT_DIR
-    cp -R target "$OUTPUT_DIR"
-    cp Dockerfile "$OUTPUT_DIR"
-    echo "${CURRENT_DATE}_${COMMIT_REF}" | tee "$OUTPUT_DIR/tags.txt"
+    mv target/*.jar $OUTPUT_DIR/backend-$COMMIT_REF.jar

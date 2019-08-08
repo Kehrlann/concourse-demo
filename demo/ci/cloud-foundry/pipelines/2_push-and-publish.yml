@@ -1,0 +1,57 @@
+config:
+- &git-config
+  uri: git@git:~/concourse.git
+  private_key: ((id-rsa-git))
+  branch: master
+
+- &cf-config
+  api: ((cf.api))
+  username: ((cf.username))
+  password: ((cf.password))
+  organization: cfdev-org
+  skip_cert_check: true
+
+- &s3-config
+  access_key_id: ((minio.id))
+  secret_access_key: ((minio.secret))
+  endpoint: ((minio.api))
+  skip_ssl_verification: true
+
+resources:
+- name: backend-repo
+  type: git
+  source:
+    <<: *git-config
+    paths:
+    - demo/backend
+    - demo/ci/tasks/test-and-build-backend.yml
+    - demo/ci/manifests/backend.yml
+
+- name: cf-dev
+  type: cf
+  source:
+    <<: *cf-config
+    space: ci
+
+- name: backend-bucket
+  type: s3
+  source:
+    <<: *s3-config
+    bucket: todo-backend
+    regexp: backend-(.*).jar
+
+jobs:
+- name: backend
+  plan:
+  - get: repo
+    resource: backend-repo
+    trigger: true
+  - task: build
+    file: repo/demo/ci/tasks/test-and-build-backend.yml
+  - put: cf-dev
+    params:
+      manifest: repo/demo/ci/manifests/backend.yml
+      path: build/backend-*.jar
+  - put: backend-bucket
+    params:
+      file: build/backend-*.jar

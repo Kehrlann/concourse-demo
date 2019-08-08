@@ -1,0 +1,33 @@
+---
+inputs:
+- name: repo
+outputs:
+- name: build
+
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: "registry:5000/todo-build-frontend"
+    insecure_registries: ["registry:5000"]
+
+run:
+  path: /bin/bash
+  args:
+  - -euc
+  - |
+    OUTPUT_DIR=$PWD/build
+    GIT_REPO="$PWD/repo/.git"
+    COMMIT_REF=$(cat $GIT_REPO/ref || echo local)
+    # Run tests and build
+    cd repo/demo/frontend
+    mv /tmp/node_modules .
+    CI=true yarn test
+    yarn build
+    # Copy the files for deploying to CF
+    mkdir -p $OUTPUT_DIR/dist
+    cp -R build/* $OUTPUT_DIR/dist
+    # Package the artifact to upload to minio
+    TAR_FILE="frontend-$COMMIT_REF.tgz"
+    tar -czf $TAR_FILE -C build .
+    mv $TAR_FILE $OUTPUT_DIR
