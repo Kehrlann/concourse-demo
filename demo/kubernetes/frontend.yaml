@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-frontend
+spec:
+  selector:
+    matchLabels:
+      app: todo
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: todo
+        tier: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "registry:5000/todo-frontend"
+          ports:
+            - name: http
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-frontend-service
+spec:
+  selector:
+    app: todo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: todo
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
+spec:
+  rules:
+    - host: todo.kube.daniel
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: todo-frontend-service
+              servicePort: 80
