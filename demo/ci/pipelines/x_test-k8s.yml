@@ -1,0 +1,34 @@
+config:
+- &git-config
+
+resource_types:
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: "registry:5000/zlabjp/kubernetes-resource"
+    insecure_registries:
+    - "registry:5000"
+
+resources:
+- name: repo
+  type: git
+  source:
+    uri: git@git:~/concourse.git
+    private_key: ((id-rsa-git))
+    branch: master
+
+- name: kubernetes
+  type: kubernetes
+  source:
+    kubeconfig: |
+      ((kubeconfig))
+
+jobs:
+- name: kube 
+  plan:
+  - get: repo
+  - put: kubernetes
+    params:
+      kubectl: apply -f repo/demo/kubernetes/reference/echo.yaml
+      wait_until_ready: 120
+      wait_until_ready_interval: 10
