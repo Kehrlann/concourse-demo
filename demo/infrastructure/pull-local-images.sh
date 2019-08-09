@@ -41,4 +41,3 @@ start_registry
 pull_and_save alpine
 pull_and_save openjdk 8-jre-alpine
 pull_and_save nginx "1.15.8-alpine"
-stop-registry
