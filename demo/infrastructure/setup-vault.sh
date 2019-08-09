@@ -14,6 +14,12 @@ else
   echo '√ vault: CF secrets already loaded'
 fi
 
+if ! vault list concourse/main/ | grep -q kubeconfig; then
+  vault kv put concourse/main/kubeconfig value="$(kubectl config view --flatten)"
+else
+  echo '√ vault: minikube secrets already loaded'
+fi
+
 if ! vault list concourse/main/ | grep -q minio; then
   vault kv put concourse/main/minio api='http://minio:9000/' id='minio' secret='changeme'
 else
