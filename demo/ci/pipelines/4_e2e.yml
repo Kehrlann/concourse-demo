@@ -100,8 +100,11 @@ jobs:
   - get: e2e-repo
   - task: create-manifest
     file: e2e-repo/demo/ci/tasks/create-manifest.yml
-  - put: kubernetes
+  - put: deploy-to-kubernetes
+    resource: kubernetes
     params:
       kubectl: apply -f manifests/todo.yaml
       wait_until_ready: 120
       wait_until_ready_interval: 10
+  - task: run-tests
+    file: e2e-repo/demo/ci/tasks/run-e2e.yml

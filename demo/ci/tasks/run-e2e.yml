@@ -1,6 +1,6 @@
 ---
 inputs:
-- name: repo
+- name: e2e-repo
 
 platform: linux
 image_resource:
@@ -14,6 +14,6 @@ run:
   args:
   - -euc
   - |
-    cd repo/demo/frontend
+    cd e2e-repo/demo/frontend
     mv /tmp/node_modules .
-    APP_URL=http://todo.ci.dev.cfdev.sh yarn e2e-ci
+    APP_URL=http://todo.ci.kube.daniel yarn e2e-ci

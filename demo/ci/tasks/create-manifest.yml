@@ -28,4 +28,5 @@ run:
     cat e2e-repo/demo/kubernetes/todo.yaml \
     | sed "s/\(registry:5000\/todo-backend\)/\1:$BACKEND_COMMIT/" \
     | sed "s/\(registry:5000\/todo-frontend\)/\1:$FRONTEND_COMMIT/" \
+    | sed "s/todo.kube.daniel/todo.ci.kube.daniel/" \
     | tee manifests/todo.yaml
