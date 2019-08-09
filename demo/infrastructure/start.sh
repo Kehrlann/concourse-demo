@@ -38,6 +38,11 @@ function start_docker_compose() {
   echo '  OK'
 
   echo
+  echo 'Getting minikube IP'
+  export MINIKUBE_IP=$(minikube ip)
+  echo '  OK'
+
+  echo
   echo 'Creating registry volume ...'
   docker volume create --name=registry
   echo '  OK'

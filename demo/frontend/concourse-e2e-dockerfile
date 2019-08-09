@@ -17,5 +17,3 @@ RUN apt -qq update \
   && add-apt-repository "deb https://dl.google.com/linux/chrome/deb/ stable main" \
   && apt -qq update \
   && apt -qq install -y google-chrome-stable
-
-RUN echo "192.168.11.11 todo.ci.local.pcfdev.io" >> /etc/hosts

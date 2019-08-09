@@ -37,6 +37,7 @@ services:
       - './keys/worker:/concourse-keys'
     environment:
       - CONCOURSE_TSA_HOST=concourse-web:2222
+      - CONCOURSE_GARDEN_ADDITIONAL_HOST_ENTRY="${MINIKUBE_IP} todo.ci.kube.daniel"
 
   registry:
     image: registry:2
